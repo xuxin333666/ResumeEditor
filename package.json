@@ -1,0 +1,20 @@
+{
+  "name": "ResumeEditor",
+  "version": "1.0.0",
+  "description": "采用vue制作在线简历编辑器",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xuxin333666/ResumeEditor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xuxin333666/ResumeEditor/issues"
+  },
+  "homepage": "https://github.com/xuxin333666/ResumeEditor#readme"
+}
