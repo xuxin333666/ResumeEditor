@@ -3,6 +3,6 @@
       我是Preview
   </div>
 </template>
-<style>
+<style lang=scss>
 
 </style>
