@@ -40,7 +40,10 @@ export default {
       this.arrData.push(this.saveArr());
     },
     empty(){
-      this.arrData = [this.saveArr()]
+        this.arrData.splice(1,this.arrData.length)
+        for(var key in this.arrData[0]){
+            this.arrData[0][key] = '';
+        }
     }
   }
 }

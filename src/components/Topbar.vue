@@ -5,6 +5,8 @@
       <el-button type="primary" round>注册</el-button>
       <el-button type="success" round>登录</el-button>
       <el-button @click="preview()" type="primary" round>预览</el-button>
+      <el-button @click="saveData()" type="success" round>保存</el-button>
+      <el-button @click="buildNew()" type="primary" round>新建</el-button>
     </div>
 
   </div>
@@ -14,6 +16,12 @@ export default {
   methods:{
     preview(){
       this.$emit('preview');
+    },
+    saveData(){
+      this.$emit('saveData');
+    },
+    buildNew(){
+      this.$emit('buildNew');
     }
   }
 }

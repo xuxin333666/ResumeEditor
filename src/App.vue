@@ -1,6 +1,6 @@
 <template>
   <div :class="{hidden:hiddenStatus}" id="app">
-    <Topbar v-on:preview="preview" class="topbar"/>
+    <Topbar v-on:preview="preview" v-on:saveData="saveData" v-on:buildNew="buildNew()" class="topbar"/>
     <main>
       <Editor :resume="resume" class="editor"/>
       <Preview :resume="resume" class="preview"/>
@@ -20,10 +20,8 @@ export default {
     Editor,
     Preview
   },
-  data(){
-    return {
-      hiddenStatus: false,
-      resume: {
+  created(){
+      var myResume = {
         personal: {
           '姓名': '',
           '年龄': '',
@@ -54,12 +52,57 @@ export default {
           "电子邮箱": '',
           "GitHub": ''
         }
-      }
+      };
+      this.resume = JSON.parse(window.localStorage.getItem('myResume')) || myResume;
+  },
+  data(){
+    return {
+      hiddenStatus: false,
+      resume: null
     }
   },
   methods: {
     preview(){
       this.hiddenStatus = true;
+    },
+    saveData(){
+      window.localStorage.setItem('myResume',JSON.stringify(this.resume));
+    },
+    buildNew(){
+      var resume = {
+        personal: {
+          '姓名': '',
+          '年龄': '',
+          '城市': ''
+        },
+        workMain: [{
+          '公司': '',
+          '工作经历': ''
+        }],
+        stady: [{
+          '起始日期': '',
+          '学校': '',
+          '学位/专业': '',
+          '在校经历': '',
+        }],
+        project: [{
+          '项目名称': '',
+          "项目内容": '',
+          "学到了？": ''
+        }],
+        prize: [{
+          '获奖时间': '',
+          '奖项名称': ''
+        }],
+        contact: {
+          "电话": '',
+          "微信": '',
+          "电子邮箱": '',
+          "GitHub": ''
+        }
+      };
+      window.localStorage.setItem('myResume',JSON.stringify(resume));
+      location.reload();
     }
   }
 }
