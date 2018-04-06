@@ -1,5 +1,5 @@
 # resume
-### 预览： https://xuxin333666.github.io/ResumeEditor/
+### 预览： https://xuxin333666.github.io/ResumeEditor/dist/
 > A Vue.js project
 
 ## Build Setup
