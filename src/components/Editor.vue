@@ -9,22 +9,22 @@
     </ul>
     <ul class="content">
       <li class="objectClass" v-bind:class="{action: index === 0}">
-        <objectEditor v-bind:objectData="personal" v-bind:label="{name:'姓名',age:'年龄',city:'城市'}" v-bind:title="'个人信息'"/>
+        <objectEditor v-bind:objectData="resume.personal" v-bind:label="{name:'姓名',age:'年龄',city:'城市'}" v-bind:title="'个人信息'"/>
       </li>
       <li class="arrClass" v-bind:class="{action: index === 1}">
-        <arrEditor v-bind:arrData="workMain" v-bind:label="{company:'公司',workContent:'工作经历'}" v-bind:title="'工作经历'"  v-bind:Textarea="['workContent']"/>
+        <arrEditor v-bind:arrData="resume.workMain" v-bind:label="{company:'公司',workContent:'工作经历'}" v-bind:title="'工作经历'"  v-bind:Textarea="['workContent']"/>
       </li>
       <li class="arrClass" v-bind:class="{action: index === 2}">
-        <arrEditor v-bind:arrData="stady" v-bind:label="{startDate:'起始日期',school:'学校',degreeAndProfession:'学位/专业',stadyHistory:'在校经历'}" v-bind:title="'在校经历'"  v-bind:Textarea="['stadyHistory']"/>
+        <arrEditor v-bind:arrData="resume.stady" v-bind:label="{startDate:'起始日期',school:'学校',degreeAndProfession:'学位/专业',stadyHistory:'在校经历'}" v-bind:title="'在校经历'"  v-bind:Textarea="['stadyHistory']"/>
       </li>
       <li class="arrClass" v-bind:class="{action: index === 3}">
-        <arrEditor v-bind:arrData="project" v-bind:label="{project:'项目名称',projectHistory:'项目内容',learn:'学到了?'}" v-bind:title="'项目经历'"  v-bind:Textarea="['projectHistory','learn']"/>
+        <arrEditor v-bind:arrData="resume.project" v-bind:label="{project:'项目名称',projectHistory:'项目内容',learn:'学到了?'}" v-bind:title="'项目经历'"  v-bind:Textarea="['projectHistory','learn']"/>
       </li>
       <li class="arrClass" v-bind:class="{action: index === 4}">
-        <arrEditor v-bind:arrData="prize" v-bind:label="{prizeDate:'获奖时间',prizeName:'奖项名称'}" v-bind:title="'获奖情况'"  v-bind:Textarea="[]"/>
+        <arrEditor v-bind:arrData="resume.prize" v-bind:label="{prizeDate:'获奖时间',prizeName:'奖项名称'}" v-bind:title="'获奖情况'"  v-bind:Textarea="[]"/>
       </li>
       <li class="objectClass" v-bind:class="{action: index === 5}">
-        <objectEditor v-bind:objectData="contact" v-bind:label="{phone:'电话',wechat:'微信',email:'电子邮箱',guthub:'Github'}" v-bind:title="'联系方式'"/>
+        <objectEditor v-bind:objectData="resume.contact" v-bind:label="{phone:'电话',wechat:'微信',email:'电子邮箱',guthub:'Github'}" v-bind:title="'联系方式'"/>
       </li>
     </ul>
   </div>
@@ -37,45 +37,13 @@ export default {
     objectEditor,
     arrEditor
   },
+  props:['resume'],
   data(){
     return {
       index: 0,
-      icon: ['id-card-5','worklinemtui','185072bookreadstreamline','wodexiangmu01','jiangbei','Phone'],
-      personal: {
-        name: '',
-        age: '',
-        city: ''
-      },
-      workMain: [{
-        company: '',
-        workContent: ''
-      }],
-      stady: [{
-        startDate: '',
-        school: '',
-        degreeAndProfession: '',
-        stadyHistory: '',
-      }],
-      project: [{
-        project: '',
-        projectHistory: '',
-        learn: ''
-      }],
-       prize: [{
-         prizeDate: '',
-         prizeName: ''
-       }],
-       contact: {
-        phone: '',
-        wechat: '',
-        email: '',
-        gitHub: ''
-      }
+      icon: ['id-card-5','worklinemtui','185072bookreadstreamline','wodexiangmu01','jiangbei','Phone']
     }
   },
-  methods: {
-   
-  }
 }
 </script>
 

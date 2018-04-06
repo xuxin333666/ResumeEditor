@@ -1,9 +1,10 @@
 <template>
-  <div id="app">
-    <Topbar class="topbar"/>
+  <div :class="{hidden:hiddenStatus}" id="app">
+    <Topbar v-on:preview="preview" class="topbar"/>
     <main>
-      <Editor class="editor"/>
-      <Preview class="preview"/>
+      <Editor :resume="resume" class="editor"/>
+      <Preview :resume="resume" class="preview"/>
+      <el-button type="primary" @click="hiddenStatus = false" class="quit" plain>退出预览</el-button>
     </main>
   </div>
 </template>
@@ -18,6 +19,48 @@ export default {
     Topbar,
     Editor,
     Preview
+  },
+  data(){
+    return {
+      hiddenStatus: false,
+      resume: {
+        personal: {
+          name: '',
+          age: '',
+          city: ''
+        },
+        workMain: [{
+          company: '',
+          workContent: ''
+        }],
+        stady: [{
+          startDate: '',
+          school: '',
+          degreeAndProfession: '',
+          stadyHistory: '',
+        }],
+        project: [{
+          project: '',
+          projectHistory: '',
+          learn: ''
+        }],
+        prize: [{
+          prizeDate: '',
+          prizeName: ''
+        }],
+        contact: {
+          phone: '',
+          wechat: '',
+          email: '',
+          gitHub: ''
+        }
+      }
+    }
+  },
+  methods: {
+    preview(){
+      this.hiddenStatus = true;
+    }
   }
 }
 </script>
@@ -27,6 +70,23 @@ body,html,#app {
   height: 100%;
 }
 body {
+  #app.hidden {
+    >.topbar,>main>.editor {
+      display: none;
+    }
+    >main {
+      height: 100%;
+      >.preview {
+        max-width: 850px;
+        min-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      >.quit {
+        display: block;
+      }
+    }
+  }
   .topbar {
     position: relative;
     z-index: 1;
@@ -52,6 +112,14 @@ body {
     }
     >.preview {
       flex: 1;
+      overflow: auto;
+    }
+    >.quit {
+      display: none;
+      position: fixed;
+      bottom: 50px;
+      right: 20%;
+      z-index: 1;
     }
   }
 }
