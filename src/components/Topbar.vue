@@ -1,5 +1,5 @@
 <template>
-  <div class="topbar">
+  <div>
     <h3 class="logo">VueResumer</h3>
     <div class="headButton">
       <el-button type="primary" round>注册</el-button>

@@ -1,30 +1,30 @@
 <template>
-  <div class="editor">
+  <div>
     <ul class="label">
-      <li class="items" v-for=" i in [0,1,2,3,4,5]" v-bind:key="i" v-bind:class="{action: index === i}" v-on:click=" index = i ">
+      <li class="items" v-for=" i in [0,1,2,3,4,5]" :key="i" :class="{action: index === i}" v-on:click=" index = i ">
         <svg class="icon" aria-hidden="true">
           <use :xlink:href="`#icon-${icon[i]}`"></use>
         </svg>
       </li>
     </ul>
     <ul class="content">
-      <li class="objectClass" v-bind:class="{action: index === 0}">
-        <objectEditor v-bind:objectData="resume.personal" v-bind:label="{name:'姓名',age:'年龄',city:'城市'}" v-bind:title="'个人信息'"/>
+      <li class="objectClass" :class="{action: index === 0}">
+        <objectEditor :objectData="resume.personal" :title="'个人信息'"/>
       </li>
-      <li class="arrClass" v-bind:class="{action: index === 1}">
-        <arrEditor v-bind:arrData="resume.workMain" v-bind:label="{company:'公司',workContent:'工作经历'}" v-bind:title="'工作经历'"  v-bind:Textarea="['workContent']"/>
+      <li class="arrClass" :class="{action: index === 1}">
+        <arrEditor :arrData="resume.workMain" :title="'工作经历'"  :Textarea="['工作经历']"/>
       </li>
-      <li class="arrClass" v-bind:class="{action: index === 2}">
-        <arrEditor v-bind:arrData="resume.stady" v-bind:label="{startDate:'起始日期',school:'学校',degreeAndProfession:'学位/专业',stadyHistory:'在校经历'}" v-bind:title="'在校经历'"  v-bind:Textarea="['stadyHistory']"/>
+      <li class="arrClass" :class="{action: index === 2}">
+        <arrEditor :arrData="resume.stady" :title="'在校经历'"  :Textarea="['在校经历']"/>
       </li>
-      <li class="arrClass" v-bind:class="{action: index === 3}">
-        <arrEditor v-bind:arrData="resume.project" v-bind:label="{project:'项目名称',projectHistory:'项目内容',learn:'学到了?'}" v-bind:title="'项目经历'"  v-bind:Textarea="['projectHistory','learn']"/>
+      <li class="arrClass" :class="{action: index === 3}">
+        <arrEditor :arrData="resume.project" :title="'项目经历'"  :Textarea="['项目内容','学到了？']"/>
       </li>
-      <li class="arrClass" v-bind:class="{action: index === 4}">
-        <arrEditor v-bind:arrData="resume.prize" v-bind:label="{prizeDate:'获奖时间',prizeName:'奖项名称'}" v-bind:title="'获奖情况'"  v-bind:Textarea="[]"/>
+      <li class="arrClass" :class="{action: index === 4}">
+        <arrEditor :arrData="resume.prize" :title="'获奖情况'" :Textarea="[]"/>
       </li>
-      <li class="objectClass" v-bind:class="{action: index === 5}">
-        <objectEditor v-bind:objectData="resume.contact" v-bind:label="{phone:'电话',wechat:'微信',email:'电子邮箱',guthub:'Github'}" v-bind:title="'联系方式'"/>
+      <li class="objectClass" :class="{action: index === 5}">
+        <objectEditor :objectData="resume.contact"  :title="'联系方式'"/>
       </li>
     </ul>
   </div>

@@ -25,34 +25,34 @@ export default {
       hiddenStatus: false,
       resume: {
         personal: {
-          name: '',
-          age: '',
-          city: ''
+          '姓名': '',
+          '年龄': '',
+          '城市': ''
         },
         workMain: [{
-          company: '',
-          workContent: ''
+          '公司': '',
+          '工作经历': ''
         }],
         stady: [{
-          startDate: '',
-          school: '',
-          degreeAndProfession: '',
-          stadyHistory: '',
+          '起始日期': '',
+          '学校': '',
+          '学位/专业': '',
+          '在校经历': '',
         }],
         project: [{
-          project: '',
-          projectHistory: '',
-          learn: ''
+          '项目名称': '',
+          "项目内容": '',
+          "学到了？": ''
         }],
         prize: [{
-          prizeDate: '',
-          prizeName: ''
+          '获奖时间': '',
+          '奖项名称': ''
         }],
         contact: {
-          phone: '',
-          wechat: '',
-          email: '',
-          gitHub: ''
+          "电话": '',
+          "微信": '',
+          "电子邮箱": '',
+          "GitHub": ''
         }
       }
     }

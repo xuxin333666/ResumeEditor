@@ -3,7 +3,7 @@
         <h2>{{title}}</h2>
         <el-form label-width="75px" class="arrEditor">
             <div class="container" v-for="(items,index) in arrData" :key="items.key">
-                <el-form-item v-for="(value,key) in items" :label="label[key]" :key="key" >
+                <el-form-item v-for="(value,key) in items" :label="key" :key="key" >
                     <el-input :type="  whichIsTextarea(Textarea,key) ? 'textarea' : 'text'  " v-model="items[key]"></el-input>
                 </el-form-item>
                 <el-button @click.prevent="remove(index)" class="remove">删除</el-button>
