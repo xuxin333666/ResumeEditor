@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Section v-for="items in arrDataCt" :key="items" :title="items.title" :arrData="items.arrData" :class="items.className"/>
+    <Section v-for="items in arrDataCt" :key="items.key" :title="items.title" :arrData="items.arrData" :class="items.className"/>
   </div>
 </template>
 <script>
