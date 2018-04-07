@@ -2,7 +2,7 @@
   <div>
     <h3 class="logo">VueResumer</h3>
     <div class="headButton">
-      <el-button @click="preview()" type="primary" round>预览</el-button>
+      <el-button @click="preview" type="primary" round>预览</el-button>
       <el-dropdown  @command="handleCommand" class="menu">
         <span class="el-dropdown-link">
           欢迎您 {{this.username}}<i class="el-icon-arrow-down el-icon--right"></i>
@@ -22,7 +22,9 @@ export default {
   props: ['currentUser'],
   created(){
     setInterval(() => {
+      if(this.currentUser){
       this.username = this.currentUser.username;
+      }
     },1000)
   },
   data(){

@@ -1,100 +1,29 @@
 <template>
     <div class="dialog">
         <h1  class="header wrapper">VueResume Editor</h1>
-        <Login v-if="loginOrSign === 'login'" v-on:turnToSign="loginOrSign = 'sign'" :loginData="loginData" v-on:login="login" />
-        <SignIn v-if="loginOrSign === 'sign'" v-on:turnToLogin="loginOrSign = 'login'" :signInData="signInData" v-on:signIn="signIn" />
+        <Login v-if="loginOrSign.key === 'login'" v-on:turnToSign="loginOrSign.key = 'sign'" :loginData="loginData" v-on:login="login"  />
+        <SignIn v-if="loginOrSign.key === 'sign'" v-on:turnToLogin="loginOrSign.key = 'login'" :signInData="signInData" v-on:signIn="signIn"  />
     </div>
 </template>
 <script>
 import Login from './Login'
 import SignIn from './SignIn'
-import AV from 'leancloud-storage'
-var APP_ID = '0N7uC2niE1R8CL85PDvLsO20-gzGzoHsz';
-var APP_KEY = 'RjJrlzDHVWh4JgWcGhxcb9vr';
-AV.init({
-  appId: APP_ID,
-  appKey: APP_KEY
-});
 export default {  
-    props:['currentUser'],
+    props:['loginData','signInData','loginOrSign'],
     components: {
         Login,
         SignIn
     },
     data(){
         return {
-            loginOrSign: 'login',
-            loginData: {
-                isRememberUser: false,
-                username: '',
-                password: ''
-            },
-            signInData: {
-                username: '',
-                password: '',
-                password2: '',
-                phone: '',
-            }
         }
-    },
-    created(){
-        this.loginData.username = window.localStorage.getItem('myUsername') || '';
-        this.loginData.isRememberUser = window.localStorage.getItem('rememberStatus') || false;
-        setInterval(() => {
-            if(this.currentUser.logOut){
-                AV.User.logOut();
-                window.location.reload();
-            }
-        },1000);
-        this.getCurrentUser();
     },
     methods: {
         login(){
-            AV.User.logIn(this.loginData.username, this.loginData.password).then((loginedUser) => {
-                this.getCurrentUser();
-                this.rememberUser(); 
-                this.message('登录成功！','success')    
-            },(error) => {
-                this.message('用户名或密码错误','warning')
-            });
+            this.$emit('login')
         },
         signIn(){
-            let user = new AV.User();
-            user.setUsername(this.signInData.username);
-            user.setPassword(this.signInData.password);
-            user.signUp().then((loginedUser) => {
-                this.message('恭喜您，账号注册成功','success')
-                this.loginOrSign = 'login';
-                this.loginData.username = this.signInData.username;
-                this.loginData.password = this.signInData.password;
-            }, (error) => {
-                this.message('该账号已经被注册了','warning')
-                                
-            });
-        },
-        rememberUser(){
-            if(this.loginData.isRememberUser){
-                window.localStorage.setItem('myUsername',this.loginData.username);
-                window.localStorage.setItem('rememberStatus',this.loginData.isRememberUser);
-            return;
-            }
-            window.localStorage.removeItem('myUsername');
-            window.localStorage.removeItem('rememberStatus');
-        },
-        getCurrentUser(){
-            let current = AV.User.current()
-            if (current) {
-                this.currentUser.id = current.id;
-                this.currentUser.createdAt = current.createdAt;
-                this.currentUser.username = current.attributes.username;
-            }
-        },
-        message(str,str2){
-            this.$message({
-                message: str,
-                type: str2,
-                center: true
-            });
+            this.$emit('signIn')
         },
     }
 }

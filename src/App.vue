@@ -1,6 +1,6 @@
 <template>
-  <div :class="{hidden:hiddenStatus,login:currentUser.id !==null}" id="app">
-    <Dialog  class="dialog" :class="{hidden:currentUser.id !==null}" :currentUser="currentUser"/>
+  <div :class="{hidden:hiddenStatus,login:currentUser !==null}" id="app">
+    <Dialog  class="dialog" :class="{hidden:currentUser !==null}" v-on:login="login"  v-on:signIn="signIn"  :loginData="loginData" :signInData="signInData" :loginOrSign="loginOrSign"/>
     <Topbar v-on:logOut="logOut" v-on:preview="hiddenStatus = true" v-on:saveData="saveData" v-on:buildNew="buildNew" class="topbar" :currentUser="currentUser"/>
     <main>
       <Editor :resume="resume" class="editor"/>
@@ -14,6 +14,13 @@ import Dialog from './components/Dialog'
 import Topbar from './components/Topbar'
 import Editor from './components/Editor'
 import Preview from './components/Preview'
+import AV from 'leancloud-storage'
+var APP_ID = '0N7uC2niE1R8CL85PDvLsO20-gzGzoHsz';
+var APP_KEY = 'RjJrlzDHVWh4JgWcGhxcb9vr';
+AV.init({
+  appId: APP_ID,
+  appKey: APP_KEY
+});
 export default {
   name: 'App',
   components: {
@@ -56,28 +63,98 @@ export default {
         }
       };
       this.resume = JSON.parse(window.localStorage.getItem('myResume')) || myResume;
+      this.loginData.username = window.localStorage.getItem('myUsername') || '';
+      this.loginData.isRememberUser = window.localStorage.getItem('rememberStatus') || false;
+      this.getCurrentUser();
   },
   data(){
     return {
-      currentUser: {
-        logOut: false,
-        id: null
-        },
+      loginOrSign: {
+        key: 'login'
+      },
+      loginData: {
+          isRememberUser: false,
+          username: '',
+          password: ''
+      },
+      signInData: {
+          username: '',
+          password: '',
+          password2: '',
+          phone: '',
+      },
+      currentUser: null,
       hiddenStatus: false,
       resume: null,
     }
   },
   methods: {
     logOut(){
-      this.currentUser.logOut = true;
+      AV.User.logOut();
+      window.location.reload();
+    },
+    login(){
+        AV.User.logIn(this.loginData.username, this.loginData.password).then((loginedUser) => {
+            this.getCurrentUser();
+            this.rememberUser(); 
+            this.message('登录成功！','success')    
+        },(error) => {
+            this.message('用户名或密码错误','warning')
+        });
+    },
+    signIn(){
+        let user = new AV.User();
+        user.setUsername(this.signInData.username);
+        user.setPassword(this.signInData.password);
+        user.signUp().then((loginedUser) => {
+            this.message('恭喜您，账号注册成功','success')
+            this.loginOrSign.key = 'login';
+            this.loginData.username = this.signInData.username;
+            this.loginData.password = this.signInData.password;
+        }, (error) => {
+            this.message('该账号已经被注册了','warning');
+                            
+        });
+    },
+    rememberUser(){
+        if(this.loginData.isRememberUser){
+            window.localStorage.setItem('myUsername',this.loginData.username);
+            window.localStorage.setItem('rememberStatus',this.loginData.isRememberUser);
+        return;
+        }
+        window.localStorage.removeItem('myUsername');
+        window.localStorage.removeItem('rememberStatus');
+    },
+    getCurrentUser(){
+        let current = AV.User.current()
+        if (current) {
+            let {id,createdAt,attributes:{username}} = current;
+            this.currentUser = {id,createdAt,username};
+        }
     },
     saveData(){
       window.localStorage.setItem('myResume',JSON.stringify(this.resume));
+      // let dataString = JSON.stringify(this.resume);
+      // var AVResume = AV.Object.extend('AllResume');
+      // var avResume = new AVResume();
+      // avResume.set('content', dataString);
+      // avResume.save().then(function (todo) {
+      //   alert('保存成功');
+      // }, function (error) {
+      //   alert('保存失败');
+      // });
     },
     buildNew(){
       window.localStorage.removeItem('myResume');
       window.location.reload();
-    }
+    },
+    message(str,str2){
+      this.$message({
+          message: str,
+          type: str2,
+          center: true
+      });
+    },
   }
 }
 </script>
