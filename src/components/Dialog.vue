@@ -1,7 +1,6 @@
 <template>
     <div class="dialog">
         <h1  class="header wrapper">ResumeEditor</h1>
-        <div class="logo"></div>
         <Login v-if="loginOrSign === 'login'" v-on:turnToSign="loginOrSign = 'sign'" :loginData="loginData" v-on:login="login" />
         <SignIn v-if="loginOrSign === 'sign'" v-on:turnToLogin="loginOrSign = 'login'" :signInData="signInData" v-on:signIn="signIn" />
         <!-- <footer class="wrapper">
@@ -27,6 +26,7 @@ AV.init({
   appKey: APP_KEY
 });
 export default {  
+    props:['currentUser'],
     components: {
         Login,
         SignIn
@@ -48,32 +48,34 @@ export default {
     created(){
         this.loginData.username = window.localStorage.getItem('myUsername') || '';
         this.loginData.isRememberUser = window.localStorage.getItem('rememberStatus') || false;
+        setInterval(() => {
+            if(this.currentUser.logOut){
+                AV.User.logOut();
+                window.location.reload();
+            }
+        },1000);
+        this.getCurrentUser();
     },
     methods: {
         login(){
             AV.User.logIn(this.loginData.username, this.loginData.password).then((loginedUser) => {
-                console.log(loginedUser); 
-                this.rememberUser();       
-                this.$emit('login');
+                this.getCurrentUser();
+                this.rememberUser();     
             }, function (error) {
-                console.log(error)
-                alert(error)
+                alert('账号或者密码错误！')
             });
         },
         signIn(){
-            console.log(1)
             let user = new AV.User();
             user.setUsername(this.signInData.username);
             user.setPassword(this.signInData.password);
             user.signUp().then((loginedUser) => {
-                console.log(loginedUser);
                 alert('注册成功!')
                 this.loginOrSign = 'login';
                 this.loginData.username = this.signInData.username;
                 this.loginData.password = this.signInData.password;
             }, function (error) {
-                console.log(error)
-                alert(error)
+                alert('该账号已经被注册了！')
             });
         },
         rememberUser(){
@@ -84,6 +86,14 @@ export default {
             }
             window.localStorage.removeItem('myUsername');
             window.localStorage.removeItem('rememberStatus');
+        },
+        getCurrentUser(){
+            let current = AV.User.current()
+            if (current) {
+                this.currentUser.id = current.id;
+                this.currentUser.createdAt = current.createdAt;
+                this.currentUser.attributes = current.attributes.username;
+            }
         }
     }
 }

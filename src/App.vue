@@ -1,7 +1,7 @@
 <template>
-  <div :class="{hidden:hiddenStatus,login:loginStatus}" id="app">
-    <Dialog v-on:login="loginStatus = true" class="dialog" :class="{hidden:loginStatus}"/>
-    <Topbar v-on:quitLogin="reload" v-on:preview="hiddenStatus = true" v-on:saveData="saveData" v-on:buildNew="buildNew" class="topbar"/>
+  <div :class="{hidden:hiddenStatus,login:currentUser.id !==null}" id="app">
+    <Dialog  class="dialog" :class="{hidden:currentUser.id !==null}" :currentUser="currentUser"/>
+    <Topbar v-on:logOut="logOut" v-on:preview="hiddenStatus = true" v-on:saveData="saveData" v-on:buildNew="buildNew" class="topbar"/>
     <main>
       <Editor :resume="resume" class="editor"/>
       <Preview :resume="resume" class="preview"/>
@@ -59,53 +59,24 @@ export default {
   },
   data(){
     return {
-      currentUser: null,
-      loginStatus: false,
+      currentUser: {
+        logOut: false,
+        id: null
+        },
       hiddenStatus: false,
-      resume: null
+      resume: null,
+
     }
   },
   methods: {
+    logOut(){
+      this.currentUser.logOut = true;
+    },
     saveData(){
       window.localStorage.setItem('myResume',JSON.stringify(this.resume));
     },
     buildNew(){
-      var resume = {
-        personal: {
-          '姓名': '',
-          '年龄': '',
-          '城市': ''
-        },
-        workMain: [{
-          '公司': '',
-          '工作经历': ''
-        }],
-        stady: [{
-          '起始日期': '',
-          '学校': '',
-          '学位/专业': '',
-          '在校经历': '',
-        }],
-        project: [{
-          '项目名称': '',
-          "项目内容": '',
-          "学到了？": ''
-        }],
-        prize: [{
-          '获奖时间': '',
-          '奖项名称': ''
-        }],
-        contact: {
-          "电话": '',
-          "微信": '',
-          "电子邮箱": '',
-          "GitHub": ''
-        }
-      };
-      window.localStorage.setItem('myResume',JSON.stringify(resume));
-      location.reload();
-    },
-    reload(){
+      window.localStorage.removeItem('myResume');
       window.location.reload();
     }
   }
