@@ -21,11 +21,7 @@
 export default {
   props: ['currentUser'],
   created(){
-    setInterval(() => {
-      if(this.currentUser){
-      this.username = this.currentUser.username;
-      }
-    },1000)
+    this.getUsername();
   },
   data(){
     return{
@@ -53,6 +49,14 @@ export default {
     },
     buildNew(){
       this.$emit('buildNew');
+    },
+    getUsername(){
+      let time1 = setInterval(() => {
+        if(this.currentUser){
+          this.username = this.currentUser.username;
+          clearTimeout(time1)
+        }
+      },1000)
     }
   }
 }
