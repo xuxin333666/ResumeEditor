@@ -1,7 +1,9 @@
 <template>
   <div :class="{hidden:hiddenStatus,login:currentUser !==null}" id="app">
     <Dialog  class="dialog" :class="{hidden:currentUser !==null}" v-on:login="login"  v-on:signIn="signIn"  :loginData="loginData" :signInData="signInData" :loginOrSign="loginOrSign"/>
-    <Topbar v-on:logOut="logOut" v-on:preview="hiddenStatus = true" v-on:saveData="saveData" v-on:buildNew="buildNew" class="topbar" :currentUser="currentUser"/>
+    <div class="topbarCt">
+        <Topbar v-on:logOut="logOut" v-on:preview="hiddenStatus = true" v-on:saveData="saveData" v-on:buildNew="buildNew" class="topbar" :currentUser="currentUser"/> 
+    </div>
     <main>
       <Editor :resume="resume" class="editor"/>
       <Preview :resume="resume" class="preview"/>
@@ -191,10 +193,11 @@ export default {
 <style lang=scss>
 body,html,#app {
   height: 100%;
+  background: #e3dbd8;
 }
 body {
   #app.login.hidden {
-    >.topbar,>main>.editor {
+    >.topbarCt,>main>.editor {
       display: none;
     }
     >main {
@@ -211,26 +214,33 @@ body {
     }
   }
   #app.login {
-    >.topbar,>main {
+    >.topbarCt>.topbar,>main {
       display: flex;
     }
   }
   .dialog.hidden {
     display: none;
   }
-  .topbar {
-    display: none;
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    height: 7%;
-    box-shadow: 0 5px 6px rgba(0, 0, 0, 0.2),0 2px 8px rgba(0, 0, 0, 0.2)
+  .topbarCt {
+    box-shadow: 0 5px 6px rgba(0, 0, 0, 0.2),0 2px 8px rgba(0, 0, 0, 0.2);
+    >.topbar {
+      max-width: 1440px;
+      min-width: 960px;
+      margin: 0 auto;
+      display: none;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 7%;
+    }
   }
   main {
+    margin: 0 auto;
     display: none;
+    max-width: 1440px;
+    min-width: 960px;
     height: 93%;
     padding: 16px;
-    background: #e3dbd8;
     >.editor,.preview {
       display: flex;
       background: white;
@@ -239,7 +249,8 @@ body {
       box-shadow: 0 0 6px rgba(0, 0, 0, 0.2),0 0 8px rgba(0, 0, 0, 0.2);
     }
     >.editor {
-      width: 550px;
+      max-width: 550px;
+      min-width: 480px;
       margin-right: 16px;
     }
     >.preview {
