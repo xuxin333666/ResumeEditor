@@ -30,7 +30,30 @@ export default {
     Dialog
   },
   created(){
-      var myResume = {
+      this.loginData.username = window.localStorage.getItem('myUsername') || '';
+      this.loginData.isRememberUser = window.localStorage.getItem('rememberStatus') || false;
+      this.getCurrentUser();
+      this.getOldSave();
+  },
+  data(){
+    return {
+      loginOrSign: {
+        key: 'login'
+      },
+      loginData: {
+          isRememberUser: false,
+          username: '',
+          password: ''
+      },
+      signInData: {
+          username: '',
+          password: '',
+          password2: '',
+          phone: '',
+      },
+      currentUser: null,
+      hiddenStatus: false,
+      resume: {
         personal: {
           '姓名': '',
           '年龄': '',
@@ -61,31 +84,7 @@ export default {
           "电子邮箱": '',
           "GitHub": ''
         }
-      };
-      this.resume = JSON.parse(window.localStorage.getItem('myResume')) || myResume;
-      this.loginData.username = window.localStorage.getItem('myUsername') || '';
-      this.loginData.isRememberUser = window.localStorage.getItem('rememberStatus') || false;
-      this.getCurrentUser();
-  },
-  data(){
-    return {
-      loginOrSign: {
-        key: 'login'
-      },
-      loginData: {
-          isRememberUser: false,
-          username: '',
-          password: ''
-      },
-      signInData: {
-          username: '',
-          password: '',
-          password2: '',
-          phone: '',
-      },
-      currentUser: null,
-      hiddenStatus: false,
-      resume: null,
+      }
     }
   },
   methods: {
@@ -96,6 +95,7 @@ export default {
     login(){
         AV.User.logIn(this.loginData.username, this.loginData.password).then((loginedUser) => {
             this.getCurrentUser();
+            this.getOldSave();
             this.rememberUser(); 
             this.message('登录成功！','success')    
         },(error) => {
@@ -132,17 +132,47 @@ export default {
             this.currentUser = {id,createdAt,username};
         }
     },
+    updateData: function(){
+      let dataString = JSON.stringify(this.resume) 
+      let AVResume = AV.Object.createWithoutData('AllResume', this.resume.id)
+      AVResume.set('content', dataString)
+      AVResume.save().then(()=>{
+          this.message('更新成功','success')
+      },(error) => {
+          this.message('更新失败','warning');
+      })
+    },
     saveData(){
-      window.localStorage.setItem('myResume',JSON.stringify(this.resume));
-      // let dataString = JSON.stringify(this.resume);
-      // var AVResume = AV.Object.extend('AllResume');
-      // var avResume = new AVResume();
-      // avResume.set('content', dataString);
-      // avResume.save().then(function (todo) {
-      //   alert('保存成功');
-      // }, function (error) {
-      //   alert('保存失败');
-      // });
+      if(this.resume.id){
+        this.updateData();
+      }else{
+        let dataString = JSON.stringify(this.resume);
+        var AVResume = AV.Object.extend('AllResume');
+        var avResume = new AVResume();
+        var acl = new AV.ACL();
+        acl.setReadAccess(AV.User.current(),true);
+        acl.setWriteAccess(AV.User.current(),true);
+        avResume.set('content', dataString);
+        avResume.setACL(acl);
+        avResume.save().then((todo) => {
+          this.resume.id = todo.id;
+          this.message('保存成功','success')
+        }, function (error) {
+          this.message('保存失败','warning');
+        });
+      }
+    },
+    getOldSave(){
+      if(this.currentUser){
+        var query = new AV.Query('AllResume');
+        query.find().then((todos) => {
+          let id = todos[0].id;
+          this.resume = JSON.parse(todos[0].attributes.content);
+          this.resume.id = id;
+        }, function(error){
+            console.error(error);
+        })
+      }
     },
     buildNew(){
       window.localStorage.removeItem('myResume');
