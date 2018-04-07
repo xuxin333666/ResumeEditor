@@ -59,6 +59,7 @@ export default {
   },
   data(){
     return {
+      currentUser: null,
       loginStatus: false,
       hiddenStatus: false,
       resume: null

@@ -19,7 +19,14 @@
 <script>
 import Login from './Login'
 import SignIn from './SignIn'
-export default {
+import AV from 'leancloud-storage'
+var APP_ID = '0N7uC2niE1R8CL85PDvLsO20-gzGzoHsz';
+var APP_KEY = 'RjJrlzDHVWh4JgWcGhxcb9vr';
+AV.init({
+  appId: APP_ID,
+  appKey: APP_KEY
+});
+export default {  
     components: {
         Login,
         SignIn
@@ -44,11 +51,30 @@ export default {
     },
     methods: {
         login(){
-            this.rememberUser();       
-            this.$emit('login');
+            AV.User.logIn(this.loginData.username, this.loginData.password).then((loginedUser) => {
+                console.log(loginedUser); 
+                this.rememberUser();       
+                this.$emit('login');
+            }, function (error) {
+                console.log(error)
+                alert(error)
+            });
         },
         signIn(){
-            console.log(1);
+            console.log(1)
+            let user = new AV.User();
+            user.setUsername(this.signInData.username);
+            user.setPassword(this.signInData.password);
+            user.signUp().then((loginedUser) => {
+                console.log(loginedUser);
+                alert('注册成功!')
+                this.loginOrSign = 'login';
+                this.loginData.username = this.signInData.username;
+                this.loginData.password = this.signInData.password;
+            }, function (error) {
+                console.log(error)
+                alert(error)
+            });
         },
         rememberUser(){
             if(this.loginData.isRememberUser){
