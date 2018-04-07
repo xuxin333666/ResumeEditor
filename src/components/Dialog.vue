@@ -41,7 +41,9 @@ export default {
             },
             signInData: {
                 username: '',
-                password: ''
+                password: '',
+                password2: '',
+                phone: ''
             }
         }
     },
@@ -62,7 +64,7 @@ export default {
                 this.getCurrentUser();
                 this.rememberUser(); 
                 this.message('登录成功！','success')    
-            }, function (error) {
+            },(error) => {
                 this.message('用户名或密码错误','warning')
             });
         },
@@ -144,7 +146,6 @@ export default {
     .bt-input {
         margin-top: 30px;
         padding-left: 10px;
-        font-size: 14px;
         background: #e3dbd8;
         box-shadow: inset 0 -2px 3px rgba(0, 0, 0, .3), inset 0 2px 3px rgba(0, 0, 0, 0.3);
         width: 320px;
@@ -163,6 +164,11 @@ export default {
         background: #e3dbd8;
         color: #645e5e;
         font-weight: bold;
+
+    }
+    .bt-input>input::-webkit-input-placeholder {
+        font-size: 13px;
+        opacity: 0.4;
     }
     .bt-input>.empty {
         color: #645e5e;
