@@ -3,9 +3,9 @@
     <h3 class="logo">VueResumer</h3>
     <div class="headButton">
       <el-button @click="preview()" type="primary" round>预览</el-button>
-      <el-dropdown  @command="handleCommand">
+      <el-dropdown  @command="handleCommand" class="menu">
         <span class="el-dropdown-link">
-          欢迎您 {{currentUser.username}}<i class="el-icon-arrow-down el-icon--right"></i>
+          欢迎您 {{this.username}}<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="buildNew">新建简历</el-dropdown-item>
@@ -20,6 +20,17 @@
 <script>
 export default {
   props: ['currentUser'],
+  created(){
+    setInterval(() => {
+      this.username = this.currentUser.username;
+    },1000)
+  },
+  data(){
+    return{
+      username: ''
+    }
+
+  },
   methods:{
     handleCommand(command) {
       if(command==='buildNew'){
@@ -52,9 +63,15 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  >.headButton>button {
-    padding: 8px 12px;
+  >.headButton {
+    >button {
+      padding: 8px 12px;
+    }
+    >.menu {
+      cursor: pointer;
+    }
   }
+  
 }
 </style>
 

@@ -1,18 +1,8 @@
 <template>
     <div class="dialog">
-        <h1  class="header wrapper">ResumeEditor</h1>
+        <h1  class="header wrapper">VueResume Editor</h1>
         <Login v-if="loginOrSign === 'login'" v-on:turnToSign="loginOrSign = 'sign'" :loginData="loginData" v-on:login="login" />
         <SignIn v-if="loginOrSign === 'sign'" v-on:turnToLogin="loginOrSign = 'login'" :signInData="signInData" v-on:signIn="signIn" />
-        <!-- <footer class="wrapper">
-            <p class="statement">Love.ly Personal Blog .PSD Template 
-                <a href="https://baidu.com" class="copyright footerlink">Copyright ©2018 Matt Gentile</a><br>
-                <a href="" class="ad footerlink">Love.ly Home</a><span> |</span>
-                <a href="" class="ad footerlink">Bolg</a><span> |</span>
-                <a href="" class="ad footerlink">Work</a><span> |</span>
-                <a href="" class="ad footerlink">Terms of Use</a><span> |</span>
-                <a href="" class="ad footerlink">Contact Me</a>
-            </p>
-        </footer> -->
     </div>
 </template>
 <script>
@@ -43,7 +33,7 @@ export default {
                 username: '',
                 password: '',
                 password2: '',
-                phone: ''
+                phone: '',
             }
         }
     },
@@ -147,6 +137,7 @@ export default {
         margin-top: 30px;
         padding-left: 10px;
         background: #e3dbd8;
+        font-size: 14px;
         box-shadow: inset 0 -2px 3px rgba(0, 0, 0, .3), inset 0 2px 3px rgba(0, 0, 0, 0.3);
         width: 320px;
         height: 50px;
@@ -163,8 +154,6 @@ export default {
         outline: none;
         background: #e3dbd8;
         color: #645e5e;
-        font-weight: bold;
-
     }
     .bt-input>input::-webkit-input-placeholder {
         font-size: 13px;
