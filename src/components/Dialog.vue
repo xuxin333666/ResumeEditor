@@ -1,58 +1,63 @@
 <template>
     <div class="dialog">
-        <h1  class="header wrapper">Login to ResumeEditor</h1>
+        <h1  class="header wrapper">ResumeEditor</h1>
         <div class="logo"></div>
-        <div class="login content wrapper">
-            <form @submit.prevent action="" method="post" >
-                <div class="username bt-input">
-                    <svg class="icon" aria-hidden="true">
-                        <use :xlink:href="`#icon-user`"></use>
-                    </svg>
-                    <input v-on:input="loginData.usernameStatus = true" v-model="loginData.username" type="text" id="username" class="username" name="username" placeholder="亲，这里输入用户名哦~">
-                    <span v-if="loginData.usernameStatus && loginData.username" @click="loginData.username = ''" class="empty">X</span>
-                </div>
-                <div class="password bt-input">
-                    <svg class="icon" aria-hidden="true">
-                        <use :xlink:href="`#icon-password`"></use>
-                    </svg>
-                    <input type="password" id="password" class="password" name="password" placeholder="亲，确保周围环境再输入密码哦~">
-                    <span class="empty">X</span>
-                </div>
-                <div class="orther">
-                    <input type="checkbox" id="rememberme" class="rememberme" name="rememberme" value="rememberme">
-                    <label for="rememberme" class="rememberme">Remember Me</label><br>
-                    <span class="linkSignIn">还没有用户名？点击这里注册一个吧</span>
-                </div>
-                <input type="submit" value="登录" @submit.prevent @click="login" class="submit">
-            </form>
-        </div>
-        <div class="signIn"></div>
-        <footer class="wrapper">
+        <Login v-if="loginOrSign === 'login'" v-on:turnToSign="loginOrSign = 'sign'" :loginData="loginData" v-on:login="login" />
+        <SignIn v-if="loginOrSign === 'sign'" v-on:turnToLogin="loginOrSign = 'login'" :signInData="signInData" v-on:signIn="signIn" />
+        <!-- <footer class="wrapper">
             <p class="statement">Love.ly Personal Blog .PSD Template 
-                <a href="https://baidu.com" class="copyright footerlink">Copyright ©2012 Matt Gentile</a><br>
+                <a href="https://baidu.com" class="copyright footerlink">Copyright ©2018 Matt Gentile</a><br>
                 <a href="" class="ad footerlink">Love.ly Home</a><span> |</span>
                 <a href="" class="ad footerlink">Bolg</a><span> |</span>
                 <a href="" class="ad footerlink">Work</a><span> |</span>
                 <a href="" class="ad footerlink">Terms of Use</a><span> |</span>
                 <a href="" class="ad footerlink">Contact Me</a>
             </p>
-        </footer>
+        </footer> -->
     </div>
 </template>
 <script>
+import Login from './Login'
+import SignIn from './SignIn'
 export default {
+    components: {
+        Login,
+        SignIn
+    },
     data(){
         return {
+            loginOrSign: 'login',
             loginData: {
-                usernameStatus: false,
+                isRememberUser: false,
+                username: '',
+                password: ''
+            },
+            signInData: {
                 username: '',
                 password: ''
             }
         }
     },
+    created(){
+        this.loginData.username = window.localStorage.getItem('myUsername') || '';
+        this.loginData.isRememberUser = window.localStorage.getItem('rememberStatus') || false;
+    },
     methods: {
         login(){
-            this.$emit('login')
+            this.rememberUser();       
+            this.$emit('login');
+        },
+        signIn(){
+            console.log(1);
+        },
+        rememberUser(){
+            if(this.loginData.isRememberUser){
+                window.localStorage.setItem('myUsername',this.loginData.username);
+                window.localStorage.setItem('rememberStatus',this.loginData.isRememberUser);
+            return;
+            }
+            window.localStorage.removeItem('myUsername');
+            window.localStorage.removeItem('rememberStatus');
         }
     }
 }
@@ -141,7 +146,7 @@ export default {
         background: url('http://p6o0v7chj.bkt.clouddn.com/%E7%82%B9%E9%80%89-%E5%9C%86%E5%BD%A2%E9%80%89%E6%A1%86.png') no-repeat;
         background-size: contain;
     }
-    .orther>.linkSignIn {
+    .orther>.turnTo {
         font-size: 14px;
         color: #9a928f;
         font-weight: bold;

@@ -1,7 +1,7 @@
 <template>
   <div :class="{hidden:hiddenStatus,login:loginStatus}" id="app">
     <Dialog v-on:login="loginStatus = true" class="dialog" :class="{hidden:loginStatus}"/>
-    <Topbar v-on:quitLogin="loginStatus = false" v-on:preview="hiddenStatus = true" v-on:saveData="saveData" v-on:buildNew="buildNew" class="topbar"/>
+    <Topbar v-on:quitLogin="reload" v-on:preview="hiddenStatus = true" v-on:saveData="saveData" v-on:buildNew="buildNew" class="topbar"/>
     <main>
       <Editor :resume="resume" class="editor"/>
       <Preview :resume="resume" class="preview"/>
@@ -103,6 +103,9 @@ export default {
       };
       window.localStorage.setItem('myResume',JSON.stringify(resume));
       location.reload();
+    },
+    reload(){
+      window.location.reload();
     }
   }
 }
