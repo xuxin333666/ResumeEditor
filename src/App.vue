@@ -1,7 +1,7 @@
 <template>
   <div :class="{hidden:hiddenStatus,login:currentUser.id !==null}" id="app">
     <Dialog  class="dialog" :class="{hidden:currentUser.id !==null}" :currentUser="currentUser"/>
-    <Topbar v-on:logOut="logOut" v-on:preview="hiddenStatus = true" v-on:saveData="saveData" v-on:buildNew="buildNew" class="topbar"/>
+    <Topbar v-on:logOut="logOut" v-on:preview="hiddenStatus = true" v-on:saveData="saveData" v-on:buildNew="buildNew" class="topbar" :currentUser="currentUser"/>
     <main>
       <Editor :resume="resume" class="editor"/>
       <Preview :resume="resume" class="preview"/>
@@ -65,7 +65,6 @@ export default {
         },
       hiddenStatus: false,
       resume: null,
-
     }
   },
   methods: {

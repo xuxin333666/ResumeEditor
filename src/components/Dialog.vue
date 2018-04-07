@@ -60,9 +60,10 @@ export default {
         login(){
             AV.User.logIn(this.loginData.username, this.loginData.password).then((loginedUser) => {
                 this.getCurrentUser();
-                this.rememberUser();     
+                this.rememberUser(); 
+                this.message('登录成功！','success')    
             }, function (error) {
-                alert('账号或者密码错误！')
+                this.message('用户名或密码错误','warning')
             });
         },
         signIn(){
@@ -70,12 +71,13 @@ export default {
             user.setUsername(this.signInData.username);
             user.setPassword(this.signInData.password);
             user.signUp().then((loginedUser) => {
-                alert('注册成功!')
+                this.message('恭喜您，账号注册成功','success')
                 this.loginOrSign = 'login';
                 this.loginData.username = this.signInData.username;
                 this.loginData.password = this.signInData.password;
-            }, function (error) {
-                alert('该账号已经被注册了！')
+            }, (error) => {
+                this.message('该账号已经被注册了','warning')
+                                
             });
         },
         rememberUser(){
@@ -92,9 +94,16 @@ export default {
             if (current) {
                 this.currentUser.id = current.id;
                 this.currentUser.createdAt = current.createdAt;
-                this.currentUser.attributes = current.attributes.username;
+                this.currentUser.username = current.attributes.username;
             }
-        }
+        },
+        message(str,str2){
+            this.$message({
+                message: str,
+                type: str2,
+                center: true
+            });
+        },
     }
 }
 </script>
