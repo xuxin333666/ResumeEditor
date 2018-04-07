@@ -31,7 +31,6 @@ export default {
     return{
       username: ''
     }
-
   },
   methods:{
     handleCommand(command) {
@@ -58,7 +57,6 @@ export default {
   }
 }
 </script>
-
 <style lang=scss>
 .topbar {
   padding: 16px;
