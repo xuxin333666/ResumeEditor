@@ -4,6 +4,7 @@
     list-style-type: none;
     text-decoration: none;
     box-sizing: border-box;
+    transition: all 0.3s;
 }
 *:after,*:before {
     box-sizing: border-box;

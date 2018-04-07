@@ -1,6 +1,7 @@
 <template>
-  <div :class="{hidden:hiddenStatus}" id="app">
-    <Topbar v-on:preview="preview" v-on:saveData="saveData" v-on:buildNew="buildNew()" class="topbar"/>
+  <div :class="{hidden:hiddenStatus,login:loginStatus}" id="app">
+    <Dialog v-on:login="loginStatus = true" class="dialog" :class="{hidden:loginStatus}"/>
+    <Topbar v-on:quitLogin="loginStatus = false" v-on:preview="hiddenStatus = true" v-on:saveData="saveData" v-on:buildNew="buildNew" class="topbar"/>
     <main>
       <Editor :resume="resume" class="editor"/>
       <Preview :resume="resume" class="preview"/>
@@ -8,8 +9,8 @@
     </main>
   </div>
 </template>
-
 <script>
+import Dialog from './components/Dialog'
 import Topbar from './components/Topbar'
 import Editor from './components/Editor'
 import Preview from './components/Preview'
@@ -18,7 +19,8 @@ export default {
   components: {
     Topbar,
     Editor,
-    Preview
+    Preview,
+    Dialog
   },
   created(){
       var myResume = {
@@ -57,14 +59,12 @@ export default {
   },
   data(){
     return {
+      loginStatus: false,
       hiddenStatus: false,
       resume: null
     }
   },
   methods: {
-    preview(){
-      this.hiddenStatus = true;
-    },
     saveData(){
       window.localStorage.setItem('myResume',JSON.stringify(this.resume));
     },
@@ -107,13 +107,12 @@ export default {
   }
 }
 </script>
-
 <style lang=scss>
 body,html,#app {
   height: 100%;
 }
 body {
-  #app.hidden {
+  #app.login.hidden {
     >.topbar,>main>.editor {
       display: none;
     }
@@ -130,7 +129,16 @@ body {
       }
     }
   }
+  #app.login {
+    >.topbar,>main {
+      display: flex;
+    }
+  }
+  .dialog.hidden {
+    display: none;
+  }
   .topbar {
+    display: none;
     position: relative;
     z-index: 1;
     width: 100%;
@@ -138,10 +146,10 @@ body {
     box-shadow: 0 5px 6px rgba(0, 0, 0, 0.2),0 2px 8px rgba(0, 0, 0, 0.2)
   }
   main {
-    display: flex;
+    display: none;
     height: 93%;
     padding: 16px;
-    background: #e2e2e2;
+    background: #e3dbd8;
     >.editor,.preview {
       display: flex;
       background: white;
