@@ -2,11 +2,15 @@
   <div>
     <header>
       <div class="headerBg">
-        <form @submit.prevent="upLoadPhoto" action="">
-          <input type="file" id="photoFileUpload"/>
-          <input type="submit" value="上传头像"> 
+        <div class="avatarCt">
+          <input @change="upLoadPhoto" type="file" accept="image/*" id="photoFileUpload"/>
           <img class="avatar" :src="avatar.url" alt="">
-        </form>
+          <div class="hover">
+            <svg class="icon" aria-hidden="true">
+              <use :xlink:href="'#icon-user'"></use>
+            </svg>
+          </div>
+        </div>
       </div>
     </header>
     <Section v-for="items in arrDataCt" :key="items.key" :title="items.title" :arrData="items.arrData" :class="items.className"/>
@@ -72,9 +76,50 @@ export default {
     overflow: hidden;
     >.headerBg {
       width: 100%;
-      height: 55%;
+      height: 60%;
       position: relative;
       background: #589bf7;
+      >.avatarCt {
+        z-index: 1;
+        position: absolute;
+        right: 50px; 
+        width: 14.6%;
+        height: 85%;
+        background: url('http://p6o0v7chj.bkt.clouddn.com/avatar.jpg') no-repeat;
+        background-size: cover;
+        >input {
+          z-index: 4;
+          opacity: 0;
+        }
+        >.avatar {
+          z-index: 3;
+        }
+        >.avatar,>input,>.hover {
+          cursor: pointer;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: 0;
+          top: 0;
+        }
+        >.hover>svg.icon {
+          display: none;
+            width: 30%;
+            height: 30%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            fill: white;
+        }
+      }
+      >.avatarCt:hover>.hover {
+          background: #00c091;
+          opacity: 0.3;
+          >svg.icon {
+            display: block;
+          }
+        }
     }
     >.headerBg:after {
       content: '';
