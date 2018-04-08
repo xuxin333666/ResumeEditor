@@ -6,7 +6,7 @@
     </div>
     <main>
       <Editor :resume="resume" class="editor"/>
-      <Preview :resume="resume" class="preview"/>
+      <Preview :resume="resume" :avatar="avatar" v-on:upLoadPhoto="upLoadPhoto" class="preview"/>
       <el-button type="primary" @click="hiddenStatus = false" class="quit" plain>退出预览</el-button>
     </main>
   </div>
@@ -35,10 +35,14 @@ export default {
       this.loginData.username = window.localStorage.getItem('myUsername') || '';
       this.loginData.isRememberUser = window.localStorage.getItem('rememberStatus') || false;
       this.getCurrentUser();
-      this.getOldSave();
+      this.getOldSave('AllResume',this.resume,'content');
+      this.getOldSave('_File',this.avatar,'url');
   },
   data(){
     return {
+      avatar: {
+        url: ''
+      },
       loginOrSign: {
         key: 'login'
       },
@@ -97,7 +101,8 @@ export default {
     login(){
         AV.User.logIn(this.loginData.username, this.loginData.password).then((loginedUser) => {
             this.getCurrentUser();
-            this.getOldSave();
+            this.getOldSave('AllResume',this.resume,'content');
+            this.getOldSave('_File',this.avatar,'url');
             this.rememberUser(); 
             this.message('登录成功！','success')    
         },(error) => {
@@ -134,7 +139,7 @@ export default {
             this.currentUser = {id,createdAt,username};
         }
     },
-    updateData: function(){
+    updateData(){
       let dataString = JSON.stringify(this.resume) 
       let AVResume = AV.Object.createWithoutData('AllResume', this.resume.id)
       AVResume.set('content', dataString)
@@ -152,10 +157,8 @@ export default {
         var AVResume = AV.Object.extend('AllResume');
         var avResume = new AVResume();
         var acl = new AV.ACL();
-        acl.setReadAccess(AV.User.current(),true);
-        acl.setWriteAccess(AV.User.current(),true);
         avResume.set('content', dataString);
-        avResume.setACL(acl);
+        this.ACL(avResume);
         avResume.save().then((todo) => {
           this.resume.id = todo.id;
           this.message('保存成功','success')
@@ -164,21 +167,47 @@ export default {
         });
       }
     },
-    getOldSave(){
+    getOldSave(className,dataName,type){
       if(this.currentUser){
-        var query = new AV.Query('AllResume');
+        var query = new AV.Query(className);
         query.find().then((todos) => {
-          let id = todos[0].id;
-          this.resume = JSON.parse(todos[0].attributes.content);
-          this.resume.id = id;
+          if(type === 'content'){
+            this.resume.id = todos[0].id;
+            this.resume = JSON.parse(todos[0].attributes.content)
+          }else if(type === 'url'){
+            this.avatar.id = todos[todos.length-1].id;
+            this.avatar.url = todos[todos.length-1].attributes.url
+          }
         }, function(error){
-            console.error(error);
+            this.message('获取数据失败','warning');
         })
       }
     },
     buildNew(){
       window.localStorage.removeItem('myResume');
       window.location.reload();
+    },
+    upLoadPhoto(){
+      var fileUploadControl = document.getElementById('photoFileUpload');
+      if (fileUploadControl.files.length > 0) {
+        var localFile = fileUploadControl.files[0];
+        var name = 'avatar.jpg';
+        var avfile = new AV.File(name, localFile);
+        this.ACL(avfile);
+        avfile.save().then((file) => {
+          this.avatar.url = file.url();
+          this.avatar.id = file.id;
+          this.message('上传成功','success');
+        },(error) => {
+          this.message('获取头像失败','warning');
+        });
+      }
+    },
+    ACL(av){
+      var acl = new AV.ACL();
+      acl.setReadAccess(AV.User.current(),true);
+      acl.setWriteAccess(AV.User.current(),true);
+      av.setACL(acl);
     },
     message(str,str2){
       this.$message({
@@ -249,12 +278,12 @@ body {
       box-shadow: 0 0 6px rgba(0, 0, 0, 0.2),0 0 8px rgba(0, 0, 0, 0.2);
     }
     >.editor {
-      max-width: 550px;
-      min-width: 480px;
-      margin-right: 16px;
+      width: 650px;
+      margin-right: 100px;
     }
     >.preview {
       flex: 1;
+      flex-wrap: wrap;
       overflow: auto;
     }
     >.quit {
