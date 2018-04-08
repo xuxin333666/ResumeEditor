@@ -92,6 +92,8 @@ export default {
       >.arrEditor>.arrEditor {
         >.button {
           margin-top: 22px;
+          margin-right: 75px;
+          text-align: center;
         }
         >.container {
           width: 85%;

@@ -13,7 +13,7 @@
         </div>
       </div>
     </header>
-    <Section v-for="items in arrDataCt" :key="items.key" :title="items.title" :arrData="items.arrData" :class="items.className"/>
+    <Section v-for="items in arrDataCt" :key="items.key" :ArrData="items"/>
     <footer></footer>
   </div>
 </template>
@@ -27,32 +27,46 @@ export default {
         {
           title: '个人信息',
           arrData: this.resume.personal,
-          className: 'personal'
+          className: 'personal',
+          icon: {
+            '年龄': 'heart',
+            '城市': 'City'
+          }
         },
         {
           title: '工作经历',
           arrData: this.resume.workMain,
-          className: 'workMain'
+          className: 'workMain',
+          titleIcon: 'worklinemtui'
         },
         {
           title: '学习经历',
           arrData: this.resume.stady,
-          className: 'stady'
+          className: 'stady',
+          titleIcon: '185072bookreadstreamline'
         },
         {
           title: '项目经历',
           arrData: this.resume.project,
-          className: 'project'
+          className: 'project',
+          titleIcon: 'wodexiangmu01'
         },
         {
           title: '获奖情况',
           arrData: this.resume.prize,
-          className: 'prize'
+          className: 'prize',
+          titleIcon: 'jiangbei'
         },
         {
-          title: '联系方式',
           arrData: this.resume.contact,
-          className: 'contact'
+          className: 'contact',
+          icon: {
+            '电话': 'Phone',
+            '微信': 'aui-icon-weichat',
+            '电子邮箱': 'dianziyoujianemail65',
+            'GitHub': 'github'
+      
+          }
         }
       ]
     }
@@ -72,11 +86,11 @@ export default {
 .preview {
   header {
     width: 100%;
-    height: 30%;
+    height: 25%;
     overflow: hidden;
     >.headerBg {
       width: 100%;
-      height: 60%;
+      height: 70%;
       position: relative;
       background: #589bf7;
       >.avatarCt {
@@ -84,7 +98,7 @@ export default {
         position: absolute;
         top: 28%;
         right: 10%; 
-        width: 14.6%;
+        width: 16%;
         height: 80%;
         min-width: 80px;
         min-height: 100px;
@@ -152,10 +166,101 @@ export default {
     border-left: 140px solid #589bf7;
     border-bottom: 25px solid #589bf7;
   }
-  >section:first-of-type {
-    >section:first-of-type>.content>.list:fist-child {
-      position: absolute;
-      top: 0;
+  >section {
+    width: 55%;
+    >.title {
+      margin: 10px 0;
+      padding: 6px 20px;
+      width: 250px;
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      background: #589bf7;
+      color: white;
+      >svg.icon {
+        fill: white;
+      }
+    }
+    >.content {
+      display: flex;
+      flex-wrap: wrap;
+      border-bottom: 2px dotted #ccc;
+      >.list {
+        display: flex;
+        align-items: center;
+        padding: 6px 0 6px 20px;
+        font-size: 14px;
+      }
+      >.list:nth-child(4) {
+        width: 100%;
+      }
+    }
+    svg.icon {
+      fill: #589bf7;
+      width: 25px;
+      height: 25px;
+      margin-right: 10px;
+    }
+  }
+  >section.personal {
+    order: 2;
+    width: 40%;
+    >.title {
+      padding-left: 0;
+      padding-right: 0;
+      width: 100%;
+      background: unset;
+      color: #888;
+    }
+    >.content {
+      flex-direction: column;
+      border: none;
+      >.list {
+        padding: 15px 0 10px 0;
+        border-bottom: 2px dotted #ccc;
+      }
+      >.list:first-child {
+        color: white;
+        font-size: 26px;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        margin-left: 50px;
+        border-bottom: none;
+      }
+      >.list:nth-child(2) {
+        color: white; 
+        position: absolute;
+        top: 68px;   
+        left: 0;
+        margin-left: 120px;  
+        border-bottom: none;
+      }
+    }
+  }
+  >section.workMain {
+    order: 1;
+  }
+  >section.stady {
+    order: 3;
+  }
+  >section.project {
+    order: 5;
+  }
+  >section.prize {
+    order: 6;
+  }
+  >section.contact {
+    order: 4;
+    margin-top: -74px;
+    width: 40%;
+    >.content {
+      flex-direction: column;
+      border: none;
+      >.list {    
+        padding: 15px 0 10px 0;
+        border-bottom: 2px dotted #ccc;
+      }
     }
   }
 }
