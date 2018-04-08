@@ -1,5 +1,5 @@
 <template>
-    <section class="personal">
+    <section :class="arrData.className">
         <h2 v-if="(!(arrData instanceof Array)) || (filter(arrData) && epmty === false)" class="title">{{title}}</h2>
         <ul class="content" v-for="items in filter(arrData)" :key="items.key">
             <li class="list" v-for="(value,key) in items" :key="key.key">{{key}}:{{value}}</li>

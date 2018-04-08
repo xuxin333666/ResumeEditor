@@ -7,7 +7,7 @@
           <img class="avatar" :src="avatar.url" alt="">
           <div class="hover">
             <svg class="icon" aria-hidden="true">
-              <use :xlink:href="'#icon-user'"></use>
+              <use xlink:href="#icon-shumajiadian"></use>
             </svg>
           </div>
         </div>
@@ -82,11 +82,15 @@ export default {
       >.avatarCt {
         z-index: 1;
         position: absolute;
-        right: 50px; 
+        top: 28%;
+        right: 10%; 
         width: 14.6%;
-        height: 85%;
+        height: 80%;
+        min-width: 80px;
+        min-height: 100px;
         background: url('http://p6o0v7chj.bkt.clouddn.com/avatar.jpg') no-repeat;
         background-size: cover;
+        background-position: center bottom;
         >input {
           z-index: 4;
           opacity: 0;
@@ -104,8 +108,8 @@ export default {
         }
         >.hover>svg.icon {
           display: none;
-            width: 30%;
-            height: 30%;
+            width: 45%;
+            height: 45%;
             position: absolute;
             left: 50%;
             top: 50%;
@@ -119,7 +123,7 @@ export default {
           >svg.icon {
             display: block;
           }
-        }
+      }
     }
     >.headerBg:after {
       content: '';
@@ -147,6 +151,12 @@ export default {
     border-right: 140px solid white;
     border-left: 140px solid #589bf7;
     border-bottom: 25px solid #589bf7;
+  }
+  >section:first-of-type {
+    >section:first-of-type>.content>.list:fist-child {
+      position: absolute;
+      top: 0;
+    }
   }
 }
 </style>

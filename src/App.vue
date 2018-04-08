@@ -146,7 +146,7 @@ export default {
       AVResume.save().then(()=>{
           this.message('更新成功','success')
       },(error) => {
-          this.message('更新失败','warning');
+          this.message('更新失败,请重试','warning');
       })
     },
     saveData(){
@@ -163,7 +163,7 @@ export default {
           this.resume.id = todo.id;
           this.message('保存成功','success')
         }, function (error) {
-          this.message('保存失败','warning');
+          this.message('保存失败,请重试','warning');
         });
       }
     },
@@ -173,13 +173,14 @@ export default {
         query.find().then((todos) => {
           if(type === 'content'){
             this.resume.id = todos[0].id;
-            this.resume = JSON.parse(todos[0].attributes.content)
+            var obj = JSON.parse(todos[0].attributes.content);
+            this.forinObj(obj,this.resume);
           }else if(type === 'url'){
             this.avatar.id = todos[todos.length-1].id;
             this.avatar.url = todos[todos.length-1].attributes.url
           }
         }, function(error){
-            this.message('获取数据失败','warning');
+            this.message('获取数据失败,请重试','warning');
         })
       }
     },
@@ -199,7 +200,7 @@ export default {
           this.avatar.id = file.id;
           this.message('上传成功','success');
         },(error) => {
-          this.message('获取头像失败','warning');
+          this.message('获取头像失败,请重试','warning');
         });
       }
     },
@@ -216,12 +217,26 @@ export default {
           center: true
       });
     },
+    forinObj(obj,data){
+      for (var key in obj){
+        if(obj[key] instanceof Array){
+          for(var i = 0; i < obj[key].length; i++){
+            this.forinObj(obj[key][i],data[key][i])
+          }
+        }else if((typeof obj[key])=== 'object'){
+          this.forinObj(obj[key],data[key])
+        }else{
+          data[key] = obj[key]
+        }
+      }
+    }
   }
 }
 </script>
 <style lang=scss>
 body,html,#app {
   height: 100%;
+  min-height: 768px;
   background: #e3dbd8;
 }
 body {
@@ -278,11 +293,17 @@ body {
       box-shadow: 0 0 6px rgba(0, 0, 0, 0.2),0 0 8px rgba(0, 0, 0, 0.2);
     }
     >.editor {
-      width: 650px;
+      flex: 1;
+      min-width: 450px;
+      min-height: 672px;
       margin-right: 100px;
     }
     >.preview {
       flex: 1;
+      max-width: 600px;
+      max-height: 840px;
+      min-width: 480px;
+      min-height: 672px;
       flex-wrap: wrap;
       overflow: auto;
     }
