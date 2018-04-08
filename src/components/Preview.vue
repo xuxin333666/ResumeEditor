@@ -2,18 +2,30 @@
   <div>
     <header>
       <div class="headerBg">
-        <div class="avatarCt">
-          <input @change="upLoadPhoto" type="file" accept="image/*" id="photoFileUpload"/>
-          <img class="avatar" :src="avatar.url" alt="">
-          <div class="hover">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-shumajiadian"></use>
-            </svg>
+        <div class="headerMain">
+          <div class="content">
+            <p class="name">{{resume.personal.姓名}}<span class="describe">{{resume.personal.自我简述}}</span></p>
+          </div>
+          <div class="avatarCt">
+            <input @change="upLoadPhoto" type="file" accept="image/*" id="photoFileUpload"/>
+            <img class="avatar" :src="avatar.url" alt="">
+            <div class="hover">
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-shumajiadian"></use>
+              </svg>
+            </div>
           </div>
         </div>
       </div>
     </header>
-    <Section v-for="items in arrDataCt" :key="items.key" :ArrData="items"/>
+    <div class="resumeMain">
+      <div class="arrData">
+        <Section v-for="items in ArrDataCt" :key="items.key" :ArrData="items"/>
+      </div>
+      <div class="objData">
+        <Section v-for="items in ObjDataCt" :key="items.key" :ArrData="items"/>
+      </div>
+    </div>
     <footer></footer>
   </div>
 </template>
@@ -21,6 +33,16 @@
 import Section from './previewSection'
 export default {
   props:['resume','avatar'],
+  created(){
+    this.ObjDataCt = [];
+    this.ArrDataCt = this.arrDataCt.filter(value => {
+      if(value.arrData instanceof Array){
+        return value;
+      }else{
+        this.ObjDataCt.push(value);
+      }
+    })
+  },
   data(){
     return {
       arrDataCt: [
@@ -93,50 +115,68 @@ export default {
       height: 70%;
       position: relative;
       background: #589bf7;
-      >.avatarCt {
-        z-index: 1;
-        position: absolute;
-        top: 28%;
-        right: 10%; 
-        width: 16%;
-        height: 80%;
-        min-width: 80px;
-        min-height: 100px;
-        background: url('http://p6o0v7chj.bkt.clouddn.com/avatar.jpg') no-repeat;
-        background-size: cover;
-        background-position: center bottom;
-        >input {
-          z-index: 4;
-          opacity: 0;
+      >.headerMain {
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 130%;
+        >.content {
+          >.name {
+            color: white;
+            font-size: 26px;
+            >.describe {
+              margin-left: 15px;
+              font-size: 14px;
+            }
+          }
         }
-        >.avatar {
-          z-index: 3;
-        }
-        >.avatar,>input,>.hover {
-          cursor: pointer;
-          position: absolute;
+        >.avatarCt {
+          margin-left: 20px;
+          position: relative;
           width: 100%;
           height: 100%;
-          left: 0;
-          top: 0;
-        }
-        >.hover>svg.icon {
-          display: none;
-            width: 45%;
-            height: 45%;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%,-50%);
-            fill: white;
-        }
-      }
-      >.avatarCt:hover>.hover {
-          background: #00c091;
-          opacity: 0.3;
-          >svg.icon {
-            display: block;
+          max-width: 105px;
+          max-height: 128px;
+          min-width: 80px;
+          min-height: 100px;
+          background: url('http://p6o0v7chj.bkt.clouddn.com/avatar.jpg') no-repeat;
+          background-size: cover;
+          background-position: center bottom;
+          cursor: pointer;
+          >input {
+            z-index: 4;
+            opacity: 0;
           }
+          >.avatar {
+            z-index: 3;
+          }
+          >.avatar,>input,>.hover {
+            cursor: pointer;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+          }
+          >.hover>svg.icon {
+            display: none;
+              width: 45%;
+              height: 45%;
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%,-50%);
+              fill: white;
+          }
+        }
+        >.avatarCt:hover>.hover {
+            background: #00c091;
+            opacity: 0.3;
+            >svg.icon {
+              display: block;
+            }
+        }
       }
     }
     >.headerBg:after {
@@ -166,12 +206,22 @@ export default {
     border-left: 140px solid #589bf7;
     border-bottom: 25px solid #589bf7;
   }
-  >section {
-    width: 55%;
+  >.resumeMain {
+    margin-top: 30px;
+    flex: 1;
+    display: flex;
+    >.arrData {
+      width: 55%;
+    }
+    >.objData {
+      width: 45%;
+    }
+  }
+  >.resumeMain section {
     >.title {
       margin: 10px 0;
-      padding: 6px 20px;
-      width: 250px;
+      padding: 5px 20px;
+      width: 220px;
       display: flex;
       align-items: center;
       font-size: 16px;
@@ -182,13 +232,12 @@ export default {
       }
     }
     >.content {
+      margin-right: 20px;
       display: flex;
       flex-wrap: wrap;
       border-bottom: 2px dotted #ccc;
       >.list {
-        display: flex;
-        align-items: center;
-        padding: 6px 0 6px 20px;
+        padding: 8px 0 8px 20px;
         font-size: 14px;
       }
       >.list:nth-child(4) {
@@ -202,66 +251,32 @@ export default {
       margin-right: 10px;
     }
   }
-  >section.personal {
-    order: 2;
-    width: 40%;
+  >.resumeMain>.objData>section {
     >.title {
-      padding-left: 0;
-      padding-right: 0;
+      padding: 5px 0;
       width: 100%;
       background: unset;
       color: #888;
     }
     >.content {
+      margin-right: 0;
       flex-direction: column;
       border: none;
       >.list {
-        padding: 15px 0 10px 0;
+        width: 100%;
         border-bottom: 2px dotted #ccc;
       }
+    }
+  }
+  section.personal {
+    >.content {
       >.list:first-child {
-        color: white;
-        font-size: 26px;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        margin-left: 50px;
-        border-bottom: none;
+        display: none;
       }
       >.list:nth-child(2) {
-        color: white; 
-        position: absolute;
-        top: 68px;   
-        left: 0;
-        margin-left: 120px;  
-        border-bottom: none;
+        display: none;
       }
-    }
-  }
-  >section.workMain {
-    order: 1;
-  }
-  >section.stady {
-    order: 3;
-  }
-  >section.project {
-    order: 5;
-  }
-  >section.prize {
-    order: 6;
-  }
-  >section.contact {
-    order: 4;
-    margin-top: -74px;
-    width: 40%;
-    >.content {
-      flex-direction: column;
-      border: none;
-      >.list {    
-        padding: 15px 0 10px 0;
-        border-bottom: 2px dotted #ccc;
-      }
-    }
+    }   
   }
 }
 </style>

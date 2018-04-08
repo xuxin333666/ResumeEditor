@@ -9,7 +9,7 @@
     </ul>
     <ul class="content">
       <li class="objectClass" :class="{action: index === 0}">
-        <objectEditor :objectData="resume.personal" :title="'个人信息'"/>
+        <objectEditor :objectData="resume.personal" :title="'个人信息'" :Textarea="['自我简述']"/>
       </li>
       <li class="arrClass" :class="{action: index === 1}">
         <arrEditor :arrData="resume.workMain" :title="'工作经历'"  :Textarea="['工作经历']"/>
@@ -24,7 +24,7 @@
         <arrEditor :arrData="resume.prize" :title="'获奖情况'" :Textarea="[]"/>
       </li>
       <li class="objectClass" :class="{action: index === 5}">
-        <objectEditor :objectData="resume.contact"  :title="'联系方式'"/>
+        <objectEditor :objectData="resume.contact"  :title="'联系方式'" :Textarea="[]"/>
       </li>
     </ul>
   </div>

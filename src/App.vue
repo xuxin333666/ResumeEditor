@@ -250,8 +250,6 @@ body {
     >main {
       height: 100%;
       >.preview {
-        max-width: 850px;
-        min-width: 700px;
         margin-left: auto;
         margin-right: auto;
       }
@@ -302,7 +300,7 @@ body {
       margin-right: 100px;
     }
     >.preview {
-      justify-content: space-between;
+      flex-direction: column;
       flex-wrap: wrap;
       flex: 1;
       max-width: 600px;
