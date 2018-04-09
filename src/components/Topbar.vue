@@ -119,11 +119,15 @@ export default {
   }
   >.stepCt {
     cursor: default;
-    width:50%;
+    padding: 0;
+    width:33%;
+    min-width: 400px;
+    height: 100%;
     background: white;
   }
   >.headButton {
     width: 33%;
+    min-width: 400px;
     text-align: right;
     >button {
       padding: 8px 12px;

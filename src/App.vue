@@ -311,6 +311,7 @@ body {
       flex: 1;
       min-height: 672px;
       margin-right: 50px;
+      background: #d8cdc7;
     }
     >.preview {
       cursor: default;

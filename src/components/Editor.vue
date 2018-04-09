@@ -96,9 +96,25 @@ export default {
       }    
     }
   }
+  .editor>.content:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: url('http://p6o0v7chj.bkt.clouddn.com/%E6%96%87%E8%89%BA%E8%83%8C%E6%99%AF.jpg') no-repeat;
+    background-size: cover;
+    background-position: right bottom;
+    opacity: 0.5;
+    z-index: -1;
+  }
   .editor>.content {
     width: 100%;
     overflow: auto;
+    position: relative;
     >li {
       padding: 32px;
       display: none;
