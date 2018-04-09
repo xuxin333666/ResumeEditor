@@ -73,7 +73,7 @@ export default {
   .editor>.label {
     width: 100px;
     height: 100%;
-    background: black;
+    background: #589bf7;
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2),4px 0 4px rgba(0, 0, 0, 0.2);
     >.items {
       cursor: pointer;

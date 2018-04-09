@@ -1,6 +1,10 @@
 <template>
   <div>
-    <h3 class="logo">VueResumer</h3>
+    <h3 class="logo">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-iconfontmojiezuo"></use>
+        </svg>      
+      VueResumer</h3>
     <div class="headButton">
       <el-button @click="preview" type="primary" round>预览</el-button>
       <el-dropdown  @command="handleCommand" class="menu">
@@ -26,7 +30,6 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-
   </div>
 </template>
 <script>
@@ -75,10 +78,15 @@ export default {
 </script>
 <style lang=scss>
 .topbar {
-  padding: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  >.logo {
+    display: flex;
+    align-items: center;
+    >svg.icon {
+      width: 36px;
+      height: 36px;
+      fill: #589bf7;
+    }
+  }
   >.headButton {
     >button {
       padding: 8px 12px;
@@ -86,8 +94,7 @@ export default {
     >.menu {
       cursor: pointer;
     }
-  }
-  
+  } 
 }
 .tab>li {
   >svg.icon {

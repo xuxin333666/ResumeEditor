@@ -267,16 +267,20 @@ body {
   }
   .topbarCt {
     min-width: 1024px;
-    box-shadow: 0 5px 6px rgba(0, 0, 0, 0.2),0 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2),0 2px 6px rgba(0, 0, 0, 0.2);
+    height: 5%;
     >.topbar {
       max-width: 1440px;
-      min-width: 1024px;
+      width: 100%;
+      height: 100%;
+      padding: 0 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin: 0 auto;
       display: none;
       position: relative;
       z-index: 1;
-      width: 100%;
-      height: 7%;
     }
   }
   main {
@@ -284,7 +288,7 @@ body {
     display: none;
     max-width: 1440px;
     min-width: 1024px;
-    height: 93%;
+    height: 95%;
     padding: 16px;
     >.editor,.preview {
       display: flex;

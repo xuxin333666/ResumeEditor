@@ -190,7 +190,7 @@ export default {
     }
   } 
   >.resumeMain {
-    margin-top: 30px;
+    margin-top: 20px;
     flex: 1;
     display: flex;
     align-content: space-between;
@@ -265,6 +265,8 @@ export default {
       flex-direction: column;
       border: none;
       >.list {
+        display: flex;
+        align-items: center;
         width: 100%;
         padding-left: 0;
         border-bottom: 2px dotted #ccc;
