@@ -36,7 +36,7 @@ export default {
       }
       this.arrData.splice(index, 1)
     },
-    add(){      
+    add(){    
       this.arrData.push(this.saveArr());
     },
     empty(){

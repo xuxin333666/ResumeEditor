@@ -31,19 +31,18 @@ export default {
             }
         },
         isEmpty(arr){
+            var emptyStatus = true;
             arr = arr.map(value => {
-                var obj = {};
-                for (var key in value ){
-                    if(value[key]){
-                        obj[key] = value[key];
-                        this.empty = false;
+                var obj ={};
+                for (const key in value) {
+                    if (value[key]) {
+                        obj[key] = value[key]; 
+                        emptyStatus = false;                      
                     }
-                }
-                if(Object.keys(obj).length === 0){
-                    this.empty = true;
                 }
                 return obj;
             })
+            this.empty = emptyStatus;
             return arr;
         }
     }
