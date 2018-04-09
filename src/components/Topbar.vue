@@ -5,7 +5,11 @@
         <use xlink:href="#icon-iconfontmojiezuo"></use>
       </svg>      
     VueResumer</h3>
-    
+    <el-steps  :stepStatus="stepStatusCTR" process-status="wait" finish-status="success" :active="active" class="stepCt" simple>
+      <el-step title="上传头像" icon="el-icon-picture"></el-step>
+      <el-step title="编辑简历" icon="el-icon-edit"></el-step>
+      <el-step title="保存至云" icon="el-icon-upload"></el-step>
+    </el-steps>
     <div class="headButton">
       <el-button @click="preview" type="primary" round>预览</el-button>
       <el-dropdown  @command="handleCommand" class="menu">
@@ -35,13 +39,19 @@
 </template>
 <script>
 export default {
-  props: ['currentUser'],
+  props: ['currentUser','stepStatus','resume'],
   created(){
     this.getUsername();
+    setTimeout(()=>{
+      this.stepStatusCTR();
+      this.$watch('resume',this.resumeEditor, {deep: true})
+      this.$watch('stepStatus',this.stepStatusCTR, {deep: true})
+    },1500)
   },
   data(){
     return{
-      username: ''
+      username: '',
+      active: 0
     }
   },
   methods:{
@@ -73,6 +83,21 @@ export default {
           clearTimeout(time1)
         }
       },1000)
+    },
+    stepStatusCTR(){
+      if (this.stepStatus.isUploadPhoto) {
+        if(this.stepStatus.isSaveData){
+          this.active = 3;
+        }else if(this.stepStatus.isEditor){
+          this.active = 2; 
+        }else{
+          this.active = 1;
+        } 
+      }
+    },
+    resumeEditor(){
+      this.stepStatus.isSaveData = false;
+      this.stepStatus.isEditor = true;
     }
   }
 }
@@ -80,6 +105,7 @@ export default {
 <style lang=scss>
 .topbar {
   >.logo {
+    cursor: default;
     display: flex;
     align-items: center;
     >svg.icon {
@@ -87,6 +113,11 @@ export default {
       height: 36px;
       fill: #589bf7;
     }
+  }
+  >.stepCt {
+    cursor: default;
+    width:50%;
+    background: white;
   }
   >.headButton {
     >button {

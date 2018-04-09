@@ -124,10 +124,10 @@ export default {
         >.content {
           >.name {
             color: white;
-            font-size: 26px;
+            font-size: 32px;
             >.describe {
               margin-left: 15px;
-              font-size: 14px;
+              font-size: 15px;
             }
           }
         }

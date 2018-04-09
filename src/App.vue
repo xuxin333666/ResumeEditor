@@ -2,7 +2,7 @@
   <div :class="{hidden:hiddenStatus,login:currentUser !==null}" id="app">
     <Dialog  class="dialog" :class="{hidden:currentUser !==null}" v-on:login="login"  v-on:signIn="signIn"  :loginData="loginData" :signInData="signInData" :loginOrSign="loginOrSign"/>
     <div class="topbarCt">
-        <Topbar v-on:logOut="logOut" v-on:preview="hiddenStatus = true" v-on:saveData="saveData" v-on:buildNew="buildNew" class="topbar" :currentUser="currentUser"/> 
+        <Topbar v-on:logOut="logOut" v-on:preview="hiddenStatus = true" v-on:saveData="saveData" v-on:buildNew="buildNew" class="topbar" :stepStatus="stepStatus" :currentUser="currentUser" :resume="resume"/> 
     </div>
     <main>
       <Editor :resume="resume" class="editor"/>
@@ -40,6 +40,11 @@ export default {
   },
   data(){
     return {
+      stepStatus: {
+        isUploadPhoto: false,
+        isEditor: false,
+        isSaveData: false
+      },
       avatar: {
         url: ''
       },
@@ -147,6 +152,7 @@ export default {
       AVResume.set('content', dataString)
       AVResume.save().then(()=>{
           this.message('更新成功','success')
+          this.stepStatus.isSaveData = true;
       },(error) => {
           this.message('更新失败,请重试','warning');
       })
@@ -163,6 +169,7 @@ export default {
         this.ACL(avResume);
         avResume.save().then((todo) => {
           this.resume.id = todo.id;
+          this.stepStatus.isSaveData = true;
           this.message('保存成功','success')
         }, function (error) {
           this.message('保存失败,请重试','warning');
@@ -180,6 +187,7 @@ export default {
           }else if(type === 'url'){
             this.avatar.id = todos[todos.length-1].id;
             this.avatar.url = todos[todos.length-1].attributes.url
+            this.stepStatus.isUploadPhoto = true;
           }
         }, function(error){
             this.message('获取数据失败,请重试','warning');
@@ -200,6 +208,7 @@ export default {
         avfile.save().then((file) => {
           this.avatar.url = file.url();
           this.avatar.id = file.id;
+          this.stepStatus.isUploadPhoto = true;
           this.message('上传成功','success');
         },(error) => {
           this.message('获取头像失败,请重试','warning');
@@ -304,6 +313,7 @@ body {
       margin-right: 50px;
     }
     >.preview {
+      cursor: default;
       flex-direction: column;
       flex-wrap: wrap;
       flex: 1;

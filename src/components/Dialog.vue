@@ -64,6 +64,7 @@ export default {
     padding: .1px;
     background: #586271;
     .wrapper {
+        cursor: default;
         width: 400px;
         margin: 0 auto;
         margin-top: 50px;
