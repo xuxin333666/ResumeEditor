@@ -73,7 +73,7 @@ export default {
           '工作经历': '2017年1月至2018年4月，XXXX'
         }],
         stady: [{
-          '起始日期': '2012年7月1日-2016年6月',
+          '起始日期': '2016.7.1-2018.4.1',
           '学校': '成都理工大学',
           '学位/专业': '土木工程',
           '在校经历': '在校期间参加了XXXX，担任了XXX',
@@ -81,7 +81,6 @@ export default {
         project: [{
           '项目名称': '仿移动端网易云音乐',
           "项目内容": '利用原生JS，require.js构建整个项目，基本实现XXXXX',
-          "学到了？": '移动端与PC端的开发区别，不同设备的兼容性问题等'
         }],
         prize: [{
           '获奖时间': '2016年XX月XX日',
@@ -267,10 +266,11 @@ body {
     display: none;
   }
   .topbarCt {
+    min-width: 1024px;
     box-shadow: 0 5px 6px rgba(0, 0, 0, 0.2),0 2px 8px rgba(0, 0, 0, 0.2);
     >.topbar {
       max-width: 1440px;
-      min-width: 960px;
+      min-width: 1024px;
       margin: 0 auto;
       display: none;
       position: relative;
@@ -283,7 +283,7 @@ body {
     margin: 0 auto;
     display: none;
     max-width: 1440px;
-    min-width: 960px;
+    min-width: 1024px;
     height: 93%;
     padding: 16px;
     >.editor,.preview {
@@ -295,15 +295,14 @@ body {
     }
     >.editor {
       flex: 1;
-      min-width: 450px;
       min-height: 672px;
-      margin-right: 100px;
+      margin-right: 50px;
     }
     >.preview {
       flex-direction: column;
       flex-wrap: wrap;
       flex: 1;
-      max-width: 600px;
+      max-width: 850px;
       max-height: 100%;
       min-width: 480px;
       min-height: 672px;

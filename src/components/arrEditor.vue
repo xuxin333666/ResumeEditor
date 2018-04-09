@@ -4,7 +4,7 @@
         <el-form label-width="75px" class="arrEditor">
             <div class="container" v-for="(items,index) in arrData" :key="items.key">
                 <el-form-item v-for="(value,key) in items" :label="key" :key="key" >
-                    <el-input :type="  whichIsTextarea(key) ? 'textarea' : 'text'  " v-model="items[key]"></el-input>
+                    <el-input :type="  whichIsTextarea(key) ? 'textarea' : 'text'  " :placeholder="placeholderStr[key]" v-model="items[key]"></el-input>
                 </el-form-item>
                 <el-button @click.prevent="remove(index)" class="remove">删除</el-button>
                 <hr>
@@ -18,7 +18,7 @@
 </template>
 <script>
 export default {
-  props:['arrData','label','title','Textarea'],
+  props:['arrData','label','title','Textarea','placeholderStr'],
   methods: {
     whichIsTextarea(key){
         return this.Textarea.indexOf(key) !==-1;

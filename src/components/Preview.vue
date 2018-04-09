@@ -25,8 +25,8 @@
       <div class="objData">
         <Section v-for="items in ObjDataCt" :key="items.key" :ArrData="items"/>
       </div>
+      <footer></footer>
     </div>
-    <footer></footer>
   </div>
 </template>
 <script>
@@ -83,7 +83,7 @@ export default {
           arrData: this.resume.contact,
           className: 'contact',
           icon: {
-            '电话': 'Phone',
+            '电话': 'phone',
             '微信': 'aui-icon-weichat',
             '电子邮箱': 'dianziyoujianemail65',
             'GitHub': 'github'
@@ -189,32 +189,33 @@ export default {
       border-top: 100px solid #589bf7;
     }
   } 
-  >footer {
-    width: 280px;
-    height: 4%;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    background: #589bf7;
-  }  
-  >footer:before {
-    content: '';
-    position: absolute;
-    bottom: 100%;
-    border-top: 25px solid white;
-    border-right: 140px solid white;
-    border-left: 140px solid #589bf7;
-    border-bottom: 25px solid #589bf7;
-  }
   >.resumeMain {
     margin-top: 30px;
     flex: 1;
     display: flex;
+    align-content: space-between;
+    flex-wrap: wrap;
     >.arrData {
-      width: 55%;
+      width: 68%;
     }
     >.objData {
-      width: 45%;
+      width: 32%;
+    }
+    >footer {
+      position: relative;
+      width: 100%;
+      height: 4%;
+      background: #589bf7;
+    }  
+    >footer:before {
+      content: '';
+      position: absolute;
+      bottom: 100%;
+      right: 0;
+      border-top: 25px solid white;
+      border-right: 80px solid white;
+      border-left: 80px solid #589bf7;
+      border-bottom: 25px solid #589bf7;
     }
   }
   >.resumeMain section {
@@ -237,11 +238,12 @@ export default {
       flex-wrap: wrap;
       border-bottom: 2px dotted #ccc;
       >.list {
+        min-width: 33%;
         padding: 8px 0 8px 20px;
         font-size: 14px;
       }
-      >.list:nth-child(4) {
-        width: 100%;
+      >.list:nth-child(1) {
+        white-space: nowrap;
       }
     }
     svg.icon {
@@ -264,6 +266,7 @@ export default {
       border: none;
       >.list {
         width: 100%;
+        padding-left: 0;
         border-bottom: 2px dotted #ccc;
       }
     }
@@ -277,6 +280,13 @@ export default {
         display: none;
       }
     }   
+  }
+  section.contact {
+    >.content {
+      >.list:nth-child(4) {
+        font-size: 12px;
+      }
+    }
   }
 }
 </style>

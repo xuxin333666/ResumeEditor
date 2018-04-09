@@ -9,22 +9,22 @@
     </ul>
     <ul class="content">
       <li class="objectClass" :class="{action: index === 0}">
-        <objectEditor :objectData="resume.personal" :title="'个人信息'" :Textarea="['自我简述']"/>
+        <objectEditor :objectData="resume.personal" :title="'个人信息'" :Textarea="['自我简述']" :placeholderStr="placeholderStr"/>
       </li>
       <li class="arrClass" :class="{action: index === 1}">
-        <arrEditor :arrData="resume.workMain" :title="'工作经历'"  :Textarea="['工作经历']"/>
+        <arrEditor :arrData="resume.workMain" :title="'工作经历'"  :Textarea="['工作经历']" :placeholderStr="placeholderStr"/>
       </li>
       <li class="arrClass" :class="{action: index === 2}">
-        <arrEditor :arrData="resume.stady" :title="'在校经历'"  :Textarea="['在校经历']"/>
+        <arrEditor :arrData="resume.stady" :title="'在校经历'"  :Textarea="['在校经历']" :placeholderStr="placeholderStr"/>
       </li>
       <li class="arrClass" :class="{action: index === 3}">
-        <arrEditor :arrData="resume.project" :title="'项目经历'"  :Textarea="['项目内容','学到了？']"/>
+        <arrEditor :arrData="resume.project" :title="'项目经历'"  :Textarea="['项目内容','学到了？']" :placeholderStr="placeholderStr"/>
       </li>
       <li class="arrClass" :class="{action: index === 4}">
-        <arrEditor :arrData="resume.prize" :title="'获奖情况'" :Textarea="[]"/>
+        <arrEditor :arrData="resume.prize" :title="'获奖情况'" :Textarea="[]" :placeholderStr="placeholderStr"/>
       </li>
       <li class="objectClass" :class="{action: index === 5}">
-        <objectEditor :objectData="resume.contact"  :title="'联系方式'" :Textarea="[]"/>
+        <objectEditor :objectData="resume.contact"  :title="'联系方式'" :Textarea="[]" :placeholderStr="placeholderStr"/>
       </li>
     </ul>
   </div>
@@ -41,7 +41,29 @@ export default {
   data(){
     return {
       index: 0,
-      icon: ['id-card-5','worklinemtui','185072bookreadstreamline','wodexiangmu01','jiangbei','Phone']
+      icon: ['id-card-5','worklinemtui','185072bookreadstreamline','wodexiangmu01','jiangbei','Phone'],
+      placeholderStr: {
+        '姓名': '填写姓名（必填项）',
+        '自我简述': '一句话介绍自己（必填项）',
+        '年龄': 'XX岁（必填项）',
+        '城市': '填写所在地或意向前往的城市（必填项）',
+        '工作时间': '日期格式建议用：2XXX.X.X-2XXX.X.X',
+        '公司': '全称或简称均可',
+        '职位': '请填写详细职位',
+        '工作经历': '按实填写即可',
+        '起始日期': '日期格式建议用：2XXX.X.X-2XXX.X.X',
+        '学校': '填写毕业证上的学校名称',
+        '学位/专业': '填写毕业证上的专业名称（若有）',
+        '在校经历': '按实填写即可',
+        '项目名称': '按实填写即可',
+        "项目内容": '简要描述项目内容，使用的技术等',
+        '获奖时间': '日期格式建议用：2XXX.X.X',
+        '奖项名称': '荣誉证书、竞赛获奖证书、奖学金等',
+        "电话": '建议写成易于拨打的形式，如：185-5555-5555（必填项）',
+        "微信": '按实填写即可（必填项）',
+        "电子邮箱": '主流邮箱产品如@163.com/@qq.com/@sina.com皆可（必填项）',
+        "GitHub": '建议不用填写协议名称节省空间（必填项）'
+      }
     }
   },
 }
@@ -84,7 +106,7 @@ export default {
         display: block;
       }
       &.objectClass {
-        width: 75%;
+        width: 85%;
         >.objectEditor>.objectEditor {
           padding-top: 22px;
         }
