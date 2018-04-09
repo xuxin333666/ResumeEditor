@@ -12,6 +12,8 @@
     </el-steps>
     <div class="headButton">
       <el-button @click="preview" type="primary" round>预览</el-button>
+      <el-button @click="saveData" type="success" round>保存</el-button>
+      <el-button @click="buildNew" type="primary" round>新建</el-button>
       <el-dropdown  @command="handleCommand" class="menu">
         <span class="el-dropdown-link">
           欢迎您 {{this.username}}<i class="el-icon-arrow-down el-icon--right"></i>
@@ -105,6 +107,7 @@ export default {
 <style lang=scss>
 .topbar {
   >.logo {
+    width: 33%;
     cursor: default;
     display: flex;
     align-items: center;
@@ -120,10 +123,13 @@ export default {
     background: white;
   }
   >.headButton {
+    width: 33%;
+    text-align: right;
     >button {
       padding: 8px 12px;
     }
     >.menu {
+      margin-left: 20px;
       cursor: pointer;
     }
   } 
