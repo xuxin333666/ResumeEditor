@@ -88,7 +88,7 @@ export default {
     },
     stepStatusCTR(){
       if (this.stepStatus.isUploadPhoto) {
-        if(this.stepStatus.isSaveData){
+        if(this.stepStatus.isSaveData && this.stepStatus.isEditor){
           this.active = 3;
         }else if(this.stepStatus.isEditor){
           this.active = 2; 

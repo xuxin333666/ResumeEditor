@@ -102,8 +102,12 @@ export default {
   },
   methods: {
     logOut(){
-      AV.User.logOut();
-      window.location.reload();
+      if(!this.stepStatus.isSaveData){
+        this.isNotSave(AV.User.logOut,window.location.reload,this.saveData);
+      }else{
+        AV.User.logOut();
+        window.location.reload();
+      }
     },
     login(){
         AV.User.logIn(this.loginData.username, this.loginData.password).then((loginedUser) => {
@@ -240,6 +244,18 @@ export default {
           data[key] = obj[key]
         }
       }
+    },
+    isNotSave(callback1,callback2,callback3){
+      this.$confirm('还没有保存简历, 是否继续?', '提示', {
+        confirmButtonText: '保存',
+        cancelButtonText: '不保存',
+        type: 'warning'
+      }).then(() => {
+        callback3();
+      }).catch(() => {
+        callback1();
+        callback2();       
+      });
     }
   }
 }

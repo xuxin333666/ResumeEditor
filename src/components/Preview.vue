@@ -257,7 +257,7 @@ export default {
     >.title {
       padding: 5px 0;
       width: 100%;
-      background: unset;
+      background: none;
       color: #888;
     }
     >.content {
