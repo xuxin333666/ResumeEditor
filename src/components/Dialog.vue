@@ -1,6 +1,10 @@
 <template>
     <div class="dialog">
-        <h1  class="header wrapper">VueResume Editor</h1>
+        <h1  class="header wrapper">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-iconfontmojiezuo"></use>
+            </svg> 
+        VueResume Editor</h1>
         <Login v-if="loginOrSign.key === 'login'" v-on:turnToSign="loginOrSign.key = 'sign'" :loginData="loginData" v-on:login="login"  />
         <SignIn v-if="loginOrSign.key === 'sign'" v-on:turnToLogin="loginOrSign.key = 'login'" :signInData="signInData" v-on:signIn="signIn"  />
     </div>
@@ -29,10 +33,36 @@ export default {
 }
 </script>
 <style lang=scss>
+@keyframes colorchange {
+    0% {
+         fill: white;
+         color: white;
+    }
+    20% {
+        fill: red;
+        color: red;
+    }
+    40% {
+        fill: blue;
+        color: blue;
+    }
+    60% {
+        fill: green;
+        color: green;
+    }
+    80% {
+        fill: orange;
+        color: orange;
+    }
+    100% {
+        fill: white;
+        color: white;        
+    }
+}
 .dialog {
     height: 100%;
     padding: .1px;
-    background: #d8d0cd;
+    background: #586271;
     .wrapper {
         width: 400px;
         margin: 0 auto;
@@ -41,13 +71,22 @@ export default {
     }
     /* header css */
     .header {
-        color: #635b58;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        >svg.icon {
+            width: 58px;
+            height: 58px;
+            fill: white;
+            animation: colorchange 10s linear infinite;
+        }
     }
     /* content css */
     >.content {
         padding-top: 10px;
         padding-bottom: 40px;
-        background: #e5e2dd;
+        background: white;
         border-radius: 6px;
         box-shadow:0 0px 10px rgba(0, 0, 0, 0.15),0 0px 12px rgba(0, 0, 0, 0.2);
         overflow: hidden;
@@ -65,7 +104,7 @@ export default {
     .bt-input {
         margin-top: 30px;
         padding-left: 10px;
-        background: #e3dbd8;
+        background: white;
         font-size: 14px;
         box-shadow: inset 0 -2px 3px rgba(0, 0, 0, .3), inset 0 2px 3px rgba(0, 0, 0, 0.3);
         width: 320px;
@@ -81,7 +120,7 @@ export default {
         height: 80%;
         border: none;
         outline: none;
-        background: #e3dbd8;
+        background: white;
         color: #645e5e;
     }
     .bt-input>input::-webkit-input-placeholder {
@@ -134,7 +173,7 @@ export default {
         border-radius: 14px;
         font-size: 20px;
         color: white;
-        background: linear-gradient(#98ad71, #657843);
+        background: linear-gradient(#9dd0fa, #60c5ff);
     }
     .submit:hover {
         opacity: 0.85;

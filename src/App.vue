@@ -239,7 +239,7 @@ export default {
 body,html,#app {
   height: 100%;
   min-height: 768px;
-  background: #e3dbd8;
+  background: #748194;
 }
 body {
   #app.login.hidden {
@@ -267,6 +267,7 @@ body {
   }
   .topbarCt {
     min-width: 1024px;
+    background: white;
     box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2),0 2px 6px rgba(0, 0, 0, 0.2);
     height: 5%;
     >.topbar {

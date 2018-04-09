@@ -1,10 +1,11 @@
 <template>
   <div>
     <h3 class="logo">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-iconfontmojiezuo"></use>
-        </svg>      
-      VueResumer</h3>
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-iconfontmojiezuo"></use>
+      </svg>      
+    VueResumer</h3>
+    
     <div class="headButton">
       <el-button @click="preview" type="primary" round>预览</el-button>
       <el-dropdown  @command="handleCommand" class="menu">
