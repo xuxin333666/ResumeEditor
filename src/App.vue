@@ -304,7 +304,7 @@ body {
       flex-wrap: wrap;
       flex: 1;
       max-width: 600px;
-      max-height: 840px;
+      max-height: 100%;
       min-width: 480px;
       min-height: 672px;
       overflow: auto;
