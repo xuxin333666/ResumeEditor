@@ -17,6 +17,7 @@ import Topbar from './components/Topbar'
 import Editor from './components/Editor'
 import Preview from './components/Preview'
 import AV from 'leancloud-storage'
+import store from './store/index'
 var APP_ID = '0N7uC2niE1R8CL85PDvLsO20-gzGzoHsz';
 var APP_KEY = 'RjJrlzDHVWh4JgWcGhxcb9vr';
 AV.init({
@@ -25,6 +26,7 @@ AV.init({
 });
 export default {
   name: 'App',
+  store,
   components: {
     Topbar,
     Editor,
@@ -103,7 +105,7 @@ export default {
   methods: {
     logOut(){
       if(!this.stepStatus.isSaveData){
-        this.isNotSave(AV.User.logOut,window.location.reload,this.saveData);
+        this.isNotSave();
       }else{
         AV.User.logOut();
         window.location.reload();
@@ -245,16 +247,20 @@ export default {
         }
       }
     },
-    isNotSave(callback1,callback2,callback3){
+    isNotSave(){
       this.$confirm('还没有保存简历, 是否继续?', '提示', {
         confirmButtonText: '保存',
         cancelButtonText: '不保存',
         type: 'warning'
       }).then(() => {
-        callback3();
+        this.saveData();
+        setTimeout(()=>{
+          AV.User.logOut();
+          window.location.reload();  
+        },1000) 
       }).catch(() => {
-        callback1();
-        callback2();       
+        AV.User.logOut();
+        window.location.reload();     
       });
     }
   }

@@ -37,6 +37,10 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+      <li>
+        {{count}}
+        <button @click="add">test</button>
+      </li>
   </div>
 </template>
 <script>
@@ -56,7 +60,15 @@ export default {
       active: 0
     }
   },
-  methods:{
+ computed: {
+      count () {
+       return this.$store.state.count
+      }
+    },
+  methods: {
+      add (){
+        this.$store.commit('increment')
+      },
     handleCommand(command) {
       if(command==='buildNew'){
         this.buildNew();
