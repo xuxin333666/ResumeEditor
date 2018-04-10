@@ -39,7 +39,7 @@
     </div>
       <li>
         {{count}}
-        <button @click="add">test</button>
+        <button @click="count=1">test</button>
       </li>
   </div>
 </template>
@@ -61,14 +61,16 @@ export default {
     }
   },
  computed: {
-      count () {
-       return this.$store.state.count
+      count: {
+        get(){
+          return this.$store.state.count
+        },
+        set(){
+          return this.$store.commit('increment')
+        }
       }
     },
   methods: {
-      add (){
-        this.$store.commit('increment')
-      },
     handleCommand(command) {
       if(command==='buildNew'){
         this.buildNew();
