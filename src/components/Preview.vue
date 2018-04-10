@@ -190,6 +190,7 @@ export default {
     }
   } 
   >.resumeMain {
+    width: 100%;
     margin-top: 20px;
     flex: 1;
     display: flex;

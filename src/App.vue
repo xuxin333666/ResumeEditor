@@ -5,8 +5,13 @@
         <Topbar v-on:logOut="logOut" v-on:preview="hiddenStatus = true" v-on:saveData="saveData" v-on:buildNew="buildNew" class="topbar" :stepStatus="stepStatus" :currentUser="currentUser" :resume="resume"/> 
     </div>
     <main>
-      <Editor :resume="resume" class="editor"/>
-      <Preview :resume="resume" :avatar="avatar" v-on:upLoadPhoto="upLoadPhoto" class="preview"/>
+      <Editor :class="{turn:!(turn%2)}" :resume="resume" class="editor"/>
+      <div class="turn">
+        <svg  @click="turn++" class="icon" aria-hidden="true">
+          <use xlink:href="#icon-weibiaoti8"></use>
+        </svg>
+      </div>
+      <Preview :class="{turn:!(turn%2)}" :resume="resume" :avatar="avatar" v-on:upLoadPhoto="upLoadPhoto" class="preview"/>
       <el-button type="primary" @click="hiddenStatus = false" class="quit" plain>退出预览</el-button>
     </main>
   </div>
@@ -17,7 +22,6 @@ import Topbar from './components/Topbar'
 import Editor from './components/Editor'
 import Preview from './components/Preview'
 import AV from 'leancloud-storage'
-import store from './store/index'
 var APP_ID = '0N7uC2niE1R8CL85PDvLsO20-gzGzoHsz';
 var APP_KEY = 'RjJrlzDHVWh4JgWcGhxcb9vr';
 AV.init({
@@ -26,7 +30,6 @@ AV.init({
 });
 export default {
   name: 'App',
-  store,
   components: {
     Topbar,
     Editor,
@@ -42,6 +45,7 @@ export default {
   },
   data(){
     return {
+      turn: 1,
       stepStatus: {
         isUploadPhoto: false,
         isEditor: false,
@@ -330,12 +334,32 @@ body {
       box-shadow: 0 0 6px rgba(0, 0, 0, 0.2),0 0 8px rgba(0, 0, 0, 0.2);
     }
     >.editor {
-      flex: 1;
+      flex: 1;  
+      order: 1;  
       min-height: 672px;
-      margin-right: 50px;
       background: #d8cdc7;
     }
+    >.editor.turn {
+      order: 3;
+    }
+    >.turn {
+      display: flex;
+      align-items: center;
+      order: 2;
+      height: 100%;
+      >svg.icon{
+        cursor: pointer;
+      fill: #6ba7fa;
+      margin: 7px;
+      width: 36px;
+      height: 36px;
+      }
+      >svg.icon:hover {
+        fill: #82b6ff;
+      }
+    }
     >.preview {
+      order: 3;
       cursor: default;
       flex-direction: column;
       flex-wrap: wrap;
@@ -345,6 +369,9 @@ body {
       min-width: 480px;
       min-height: 672px;
       overflow: auto;
+    }
+    >.preview.turn {
+      order: 1;
     }
     >.quit {
       display: none;
