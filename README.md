@@ -1,21 +1,10 @@
 # resume
 ### 预览： https://xuxin333666.github.io/ResumeEditor/dist/
-> A Vue.js project
-
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+****
+### 简要描述
+- 本项目为在线简历编辑器，具有注册，登录，登出，自动登录，头像上传，在线简历编辑，实时预览，在线保存，新建等功能。
+- 使用框架为vue，部分构件采用Element组件，结合HTML5,CSS3。
+- 页面适合分辨率为1024×768及以上。
+****
+### 项目小结
+- 作为vue的第一个项目，认识到了框架对于编码的简化和模块化的巨大作用，便利的同时，框架也赋予了使用者许多限制和规则，学习框架，也是学习他们的规则。

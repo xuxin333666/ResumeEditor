@@ -62,7 +62,7 @@ export default {
 .dialog {
     height: 100%;
     padding: .1px;
-    background: #586271;
+    background: #98b6e6;
     .wrapper {
         cursor: default;
         width: 400px;

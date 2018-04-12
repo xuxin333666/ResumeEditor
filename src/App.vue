@@ -278,7 +278,7 @@ body,html,#app {
 }
 body {
   #app.login.hidden {
-    >.topbarCt,>main>.editor {
+    >.topbarCt,>main>.editor,>.turn {
       display: none;
     }
     >main {

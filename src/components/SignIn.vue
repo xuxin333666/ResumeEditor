@@ -5,14 +5,14 @@
                 <svg class="icon" aria-hidden="true">
                     <use :xlink:href="`#icon-user`"></use>
                 </svg>
-                <input @blur="formMatch(0,signInData.username)" :class="{error:!rule[0].status}" v-model="signInData.username" type="text" name="username" autocomplete="off" placeholder="用户名为6-20位数字、字母、下划线">
+                <input @blur="formMatch(0,signInData.username)" :class="{error:!rule[0].status}" v-model="signInData.username" type="text" name="username" autocomplete="off" placeholder="用户名为6-14位数字、字母、下划线">
                 <span v-if="signInData.username" @click="signInData.username = ''" class="empty">X</span>
             </div>
             <div class="password bt-input">
                 <svg class="icon" aria-hidden="true">
                     <use :xlink:href="`#icon-password`"></use>
                 </svg>
-                <input @blur="formMatch(1,signInData.password)" :class="{error:!rule[1].status}" v-model="signInData.password" type="password" name="password" autocomplete="off" placeholder="密码为6-20位数字、字母、下划线">
+                <input @blur="formMatch(1,signInData.password)" :class="{error:!rule[1].status}" v-model="signInData.password" type="password" name="password" autocomplete="off" placeholder="密码为6-14位数字、字母、下划线">
                 <span v-if="signInData.password" @click="signInData.password = ''" class="empty">X</span>
             </div>
             <div class="password2 bt-input">
@@ -43,13 +43,13 @@ export default {
         return {
             rule:[
                 {
-                    reg: /^\w{6,20}$/,
-                    message: '用户名请输入6-20位数字、字母、下划线',
+                    reg: /^\w{6,14}$/,
+                    message: '用户名请输入6-14位数字、字母、下划线',
                     status: true
                 },
                 {
-                    reg: /^\w{6,20}$/,
-                    message: '密码请输入6-20位数字、字母、下划线',
+                    reg: /^\w{6,14}$/,
+                    message: '密码请输入6-14位数字、字母、下划线',
                     status: true
                 },
                 {
@@ -69,7 +69,7 @@ export default {
             let isRight = true;
             for(var i = 0;i < 3;i++){
                 if(!this.rule[i].status){
-                    this.messages('请别逗我好嘛，关键信息还没有输入完全','warning');
+                    this.messages('注册失败，关键信息还没有输入完全','warning');
                     isRight = false;                  
                 }               
             }              
